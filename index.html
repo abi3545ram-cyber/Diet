@@ -14,89 +14,70 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#eaf0ea; --surface:#ffffff; --ink:#14211c; --muted:#5f6f66;
-  --line:#d9e2db; --accent:#127049; --accent-2:#0c3a2b; --accent-soft:#e3f0e8;
-  --warn:#a8560c; --warn-soft:#fae3d0; --warn-line:#e6c39a;
-  --edge:#8a6a10; --edge-soft:#fbf3d3; --edge-line:#e6d79a;
-  --shadow:0 1px 2px rgba(20,40,30,.06),0 6px 20px rgba(20,40,30,.05);
-  --r:16px;
+  --bg:#eaf0ea;--surface:#ffffff;--ink:#14211c;--muted:#5f6f66;
+  --line:#d9e2db;--accent:#127049;--accent-2:#0c3a2b;--accent-soft:#e3f0e8;
+  --warn:#a8560c;--warn-soft:#fae3d0;--warn-line:#e6c39a;
+  --edge:#8a6a10;--edge-soft:#fbf3d3;--edge-line:#e6d79a;
+  --shadow:0 1px 2px rgba(20,40,30,.06),0 6px 20px rgba(20,40,30,.05);--r:16px;
 }
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg);color:var(--ink);
-  font-family:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  -webkit-font-smoothing:antialiased;line-height:1.4;
-  padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.4;padding-bottom:calc(30px + env(safe-area-inset-bottom))}
 .wrap{max-width:640px;margin:0 auto;padding:0 14px}
-
-header{background:var(--accent-2);color:#eef5f0;padding:calc(16px + env(safe-area-inset-top)) 0 18px}
+.mono{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-variant-numeric:tabular-nums}
+header{background:var(--accent-2);color:#eef5f0;padding:calc(16px + env(safe-area-inset-top)) 0 0}
 .brand{display:flex;align-items:center;gap:10px}
 .dot{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(18,112,73,.28)}
 h1{font-size:20px;font-weight:700;margin:0;letter-spacing:-.01em}
 .sub{color:#a9c3b6;font-size:12.5px;margin-top:6px;max-width:46ch}
-
-.summary{position:sticky;top:0;z-index:20;background:rgba(234,240,234,.9);
-  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;margin-top:14px;padding-bottom:12px}
+.tabs button{flex:1;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#cfe0d6;
+  font:inherit;font-size:13.5px;font-weight:600;padding:9px 12px;border-radius:10px 10px 0 0;cursor:pointer}
+.tabs button.active{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.summary{position:sticky;top:0;z-index:20;background:rgba(234,240,234,.9);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
 .summary .wrap{padding-top:12px;padding-bottom:12px}
 .gauges{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .gauge{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 13px;box-shadow:var(--shadow)}
 .gauge .lab{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.gauge .val{font-size:27px;font-weight:600;line-height:1.05;margin-top:2px;
-  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-variant-numeric:tabular-nums}
+.gauge .val{font-size:27px;font-weight:600;line-height:1.05;margin-top:2px;font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums}
 .gauge .val small{font-size:12px;color:var(--muted);font-weight:500;font-family:'Space Grotesk',sans-serif}
 .bar{height:6px;border-radius:6px;background:#e5ece7;margin-top:9px;overflow:hidden}
 .bar>i{display:block;height:100%;border-radius:6px;background:var(--accent);width:0;transition:width .35s ease}
-.gauge.warn .bar>i{background:var(--warn)}
-.gauge.warn .val small{color:var(--warn)}
-.target{font-size:11.5px;color:var(--muted);margin-top:9px;min-height:1em}
-.target b{color:var(--ink);font-weight:600}
-
+.gauge.warn .bar>i{background:var(--warn)}.gauge.warn .val small{color:var(--warn)}
+.target{font-size:11.5px;color:var(--muted);margin-top:9px;min-height:1em}.target b{color:var(--ink);font-weight:600}
 .statusrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px}
-.miccount{font-size:13px;font-weight:600}
-.miccount b{font-size:15px;font-family:ui-monospace,monospace}
-.miccount .ok{color:var(--accent)} .miccount .lo{color:var(--warn)}
-.detailtoggle{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;
-  font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.detailtoggle .chev{transition:transform .25s}
-.detailtoggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
-
+.miccount{font-size:13px;font-weight:600}.miccount b{font-size:15px;font-family:ui-monospace,monospace}
+.miccount .ok{color:var(--accent)}.miccount .lo{color:var(--warn)}
+.detailtoggle{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.detailtoggle .chev{transition:transform .25s}.detailtoggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .detail{overflow:hidden;transition:max-height .3s ease;max-height:0;background:var(--bg);border-bottom:1px solid var(--line)}
 .detail .inner{padding-top:12px;padding-bottom:16px}
-.gridlab{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 8px;
-  display:flex;justify-content:space-between;align-items:center}
+.gridlab{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 8px;display:flex;justify-content:space-between;align-items:center}
 .legend{display:flex;gap:10px;font-weight:500;letter-spacing:0;text-transform:none}
 .legend span{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
-.sw{width:9px;height:9px;border-radius:3px;display:inline-block}
-.sw.g{background:#bfe0cd} .sw.e{background:#e6d79a} .sw.w{background:#e6c39a}
+.sw{width:9px;height:9px;border-radius:3px;display:inline-block}.sw.g{background:#bfe0cd}.sw.e{background:#e6d79a}.sw.w{background:#e6c39a}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 @media(max-width:360px){.grid{grid-template-columns:repeat(3,1fr)}}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 6px 6px;text-align:center}
 .tile .n{font-size:10px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .p{font-size:14px;font-weight:600;margin-top:2px;font-family:ui-monospace,monospace}
-.tile.met{background:var(--accent-soft);border-color:#bfe0cd}
-.tile.met .p{color:var(--accent)} .tile.met .n{color:#2f6b50}
-.tile.borderline{background:var(--edge-soft);border-color:var(--edge-line)}
-.tile.borderline .p{color:var(--edge)} .tile.borderline .n{color:#6f5809}
-.tile.lo{background:var(--warn-soft);border-color:var(--warn-line)}
-.tile.lo .p{color:var(--warn)} .tile.lo .n{color:#7d4208}
+.tile.met{background:var(--accent-soft);border-color:#bfe0cd}.tile.met .p{color:var(--accent)}.tile.met .n{color:#2f6b50}
+.tile.borderline{background:var(--edge-soft);border-color:var(--edge-line)}.tile.borderline .p{color:var(--edge)}.tile.borderline .n{color:#6f5809}
+.tile.lo{background:var(--warn-soft);border-color:var(--warn-line)}.tile.lo .p{color:var(--warn)}.tile.lo .n{color:#7d4208}
 .tile.off{opacity:.5}
 .hints{margin-top:12px;display:grid;gap:7px}
-.hint{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:#6b3d06}
-.hint b{color:var(--warn)}
+.hint{background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:#6b3d06}.hint b{color:var(--warn)}
 .allgood{background:var(--accent-soft);border:1px solid #bfe0cd;border-radius:10px;padding:10px 12px;font-size:13px;color:#1c5a3d;font-weight:600}
-
 main .wrap{padding-top:18px}
 .section{margin-bottom:22px}
 .sectionhead{display:flex;align-items:baseline;justify-content:space-between;margin:0 2px 10px}
 .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
 .pickone{font-size:11.5px;color:var(--muted)}
 .cards{display:grid;gap:10px}
-
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .card.selected{border-color:var(--accent);box-shadow:0 0 0 2px rgba(18,112,73,.18),var(--shadow)}
 .pick{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;cursor:pointer}
-.pick input{appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:0 0 auto;width:20px;height:20px;
-  border:2px solid #c4d2c9;border-radius:50%;position:relative;cursor:pointer;transition:border-color .15s}
+.pick input{appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:0 0 auto;width:20px;height:20px;border:2px solid #c4d2c9;border-radius:50%;position:relative;cursor:pointer;transition:border-color .15s}
 .card.selected .pick input{border-color:var(--accent)}
 .pick input:checked::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
 .pick input:focus-visible{outline:3px solid rgba(18,112,73,.4);outline-offset:2px}
@@ -110,27 +91,26 @@ main .wrap{padding-top:18px}
 .chip{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:999px;letter-spacing:.02em}
 .chip.veg{background:#e3f0e8;color:#1c6b47;border:1px solid #c4e2d1}
 .chip.oily{background:#e6eef6;color:#2b5a86;border:1px solid #c6dbef}
+.chip.mine{background:#efe7f4;color:#5b3a86;border:1px solid #ddc9ef}
+.chip.adj{background:var(--edge-soft);color:var(--edge);border:1px solid var(--edge-line)}
+.eqv{color:var(--muted);font-size:12px}
+.cardbtns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.cardbtns .ghost{font-size:12px;padding:7px 12px}
+.equiv{font-size:11.5px;color:var(--muted);margin-top:5px;font-family:ui-monospace,monospace}
 .expand{width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:#fbfdfb;font:inherit;font-size:12.5px;font-weight:600;color:var(--accent);padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:6px}
-.expand .chev{transition:transform .25s;font-size:10px}
-.expand[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.expand .chev{transition:transform .25s;font-size:10px}.expand[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .ing{padding:0 14px 14px;font-size:13px;color:#3f4f47}
 .ing .macros{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--muted);padding:9px 0 10px;border-bottom:1px dashed var(--line);margin-bottom:9px}
 .ing ul{margin:0;padding-left:18px;display:grid;gap:3px}
-
-/* boosters */
-.boostmsg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;
-  font-size:12.5px;color:var(--muted);margin:0 2px 12px;box-shadow:var(--shadow)}
+.delmeal{border:1px solid var(--warn-line);background:var(--warn-soft);color:var(--warn);font:inherit;font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 10px;cursor:pointer}
+.boostmsg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin:0 2px 12px;box-shadow:var(--shadow)}
 .boostmsg b{color:var(--ink);font-weight:600}
-.boostmsg.hasgap{background:var(--warn-soft);border-color:var(--warn-line);color:#6b3d06}
-.boostmsg.hasgap b{color:var(--warn)}
-.bcard{display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);
-  border-radius:13px;padding:11px 13px;box-shadow:var(--shadow);cursor:pointer;transition:border-color .18s,box-shadow .18s}
+.boostmsg.hasgap{background:var(--warn-soft);border-color:var(--warn-line);color:#6b3d06}.boostmsg.hasgap b{color:var(--warn)}
+.bcard{display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:11px 13px;box-shadow:var(--shadow);cursor:pointer;transition:border-color .18s,box-shadow .18s}
 .bcard.reco{border-color:var(--edge-line);box-shadow:0 0 0 2px rgba(138,106,16,.16),var(--shadow)}
-.bcard input{appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:0 0 auto;width:20px;height:20px;
-  border:2px solid #c4d2c9;border-radius:6px;position:relative;cursor:pointer}
+.bcard input{appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:0 0 auto;width:20px;height:20px;border:2px solid #c4d2c9;border-radius:6px;position:relative;cursor:pointer}
 .bcard input:checked{background:var(--accent);border-color:var(--accent)}
 .bcard input:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
-.bcard input:focus-visible{outline:3px solid rgba(18,112,73,.4);outline-offset:2px}
 .btext{flex:1;min-width:0}
 .brow{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .bname{font-size:14.5px;font-weight:600}
@@ -139,7 +119,66 @@ main .wrap{padding-top:18px}
 .tag{background:#eef3ef;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-weight:600;color:#3f5348}
 .recoflag{background:var(--edge-soft);border:1px solid var(--edge-line);color:var(--edge);border-radius:6px;padding:1px 6px;font-weight:700}
 .bcard:not(.reco) .recoflag{display:none}
-
+.mealsintro{font-size:13px;color:var(--muted);margin:18px 2px 14px;line-height:1.5}
+.primary{border:0;background:var(--accent);color:#fff;font:inherit;font-size:14.5px;font-weight:600;padding:12px 16px;border-radius:12px;cursor:pointer;box-shadow:var(--shadow)}
+.ghost{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;padding:10px 14px;border-radius:10px;cursor:pointer}
+#newmeal{width:100%;margin-bottom:16px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:16px;font-size:13px;color:var(--muted);text-align:center}
+.custrow{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);padding:12px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.custmain{min-width:0}
+.slotbadge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:6px;margin-right:8px}
+.slotbadge.breakfast{background:#fdeecf;color:#8a5a06}.slotbadge.lunch{background:#e0eef6;color:#28597f}.slotbadge.dinner{background:#e7e1f2;color:#553a80}
+.custname{font-size:14.5px;font-weight:600}
+.custmacro{display:block;font-family:ui-monospace,monospace;font-size:11.5px;color:var(--muted);margin-top:5px}
+.custact{display:flex;gap:6px;flex:0 0 auto}
+.custact button{border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer}
+.custact button.del{border-color:var(--warn-line);background:var(--warn-soft);color:var(--warn)}
+.editor{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px 15px;margin-bottom:16px}
+.editor h3{margin:0 0 14px;font-size:17px}
+.fld{display:block;margin-bottom:14px}
+.fld>span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.fld input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;font-size:15px;background:#fbfdfb}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;border:1px solid var(--line);background:#fbfdfb;color:var(--muted);font:inherit;font-size:13px;font-weight:600;padding:9px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--accent-soft);border-color:#bfe0cd;color:var(--accent)}
+.subhead{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:18px 0 10px}
+.ingrow{margin-bottom:10px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.ingrow input,.ingrow select{border:1px solid var(--line);border-radius:9px;padding:9px 8px;font:inherit;font-size:13.5px;background:#fbfdfb;min-width:0}
+.ing-name{width:100%;margin-bottom:6px}
+.ingctrl{display:flex;gap:6px;align-items:center}
+.ing-amt{width:64px;flex:0 0 auto;text-align:center}
+.ing-unit,.ing-state{flex:1;min-width:0}
+.ing-del{flex:0 0 auto;border:1px solid var(--line)!important;background:#fff;color:var(--warn);font-size:18px;line-height:1;cursor:pointer;padding:0!important;width:38px;height:38px;border-radius:9px}
+.ingbtns{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.calcnote{font-size:12px;color:var(--muted);margin-top:9px;min-height:1em}
+.nutgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nutfld{display:block}
+.nutfld.big{grid-column:span 2}
+.nutfld>span{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.nutfld>span em{font-style:normal;color:#93a39a;font-weight:500}
+.nutfld input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 10px;font:inherit;font-size:14px;font-family:ui-monospace,monospace;background:#fbfdfb}
+.nutfld.big input{font-size:16px}
+.nutfld input[readonly]{background:#eef2ee;color:#55655c}
+.nutmode{margin-bottom:10px}
+.editoractions{display:flex;gap:8px;margin-top:18px}
+.editoractions .primary{flex:1}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(12,30,22,.55);display:flex;align-items:flex-end;justify-content:center}
+.modal[hidden]{display:none}
+.sheet{background:var(--bg);border-radius:18px 18px 0 0;width:100%;max-width:640px;padding:16px 16px calc(18px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto}
+.sheethead{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sheethead h3{margin:0;font-size:17px}
+#scanvideo{border-radius:12px;overflow:hidden;background:#0c221a;min-height:0}
+#scanvideo video{width:100%!important;border-radius:12px}
+.scanstatus{font-size:12.5px;color:var(--muted);margin:10px 2px;min-height:1em}
+.scanmanual>span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0}
+.scanrow{display:flex;gap:8px;align-items:center}
+.scanrow input{flex:1;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;font-size:15px;background:var(--surface);min-width:0}
+#scangrams{flex:0 0 96px;text-align:center;font-family:ui-monospace,monospace}
+.gsuf{color:var(--muted);font-weight:600}
+.scanresult{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow)}
+.scanname{font-size:15px;font-weight:600}
+.scanmeta{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);margin:6px 0 10px}
+.scannote{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.45}
 footer{color:var(--muted);font-size:11.5px;text-align:center;padding:8px 0 4px;line-height:1.5}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -148,136 +187,172 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;padding:8px 0 4px;l
 <header>
   <div class="wrap">
     <div class="brand"><span class="dot"></span><h1>Full Plate</h1></div>
-    <p class="sub">Pick a breakfast, lunch and dinner. See your totals, which micronutrients are short, and add optional boosters to fill the gaps.</p>
+    <p class="sub">Pick a breakfast, lunch and dinner, see what you're short on, and add boosters or your own meals to fill the gaps.</p>
+    <div class="tabs"><button data-tab="build" class="active">Build day</button><button data-tab="meals">My meals</button></div>
   </div>
 </header>
-
-<div class="summary">
+<div id="tab-build">
+  <div class="summary">
+    <div class="wrap">
+      <div class="gauges">
+        <div class="gauge" id="g-kcal"><div class="lab">Calories</div><div class="val"><span id="kcal-val">—</span> <small>/ 2,250</small></div><div class="bar"><i id="kcal-bar"></i></div></div>
+        <div class="gauge" id="g-prot"><div class="lab">Protein</div><div class="val"><span id="prot-val">—</span> <small>/ 132 g</small></div><div class="bar"><i id="prot-bar"></i></div></div>
+      </div>
+      <div class="target" id="target"></div>
+      <div class="statusrow">
+        <div class="miccount" id="miccount">Pick one of each to begin</div>
+        <div style="display:flex;gap:6px"><button class="detailtoggle" id="clearday">Clear</button><button class="detailtoggle" id="detailtoggle" aria-expanded="true" aria-controls="detail">Micronutrients <span class="chev">▾</span></button></div>
+      </div>
+    </div>
+  </div>
+  <div class="detail" id="detail">
+    <div class="wrap inner">
+      <div class="gridlab"><span>Every micronutrient, % of RDI</span>
+        <span class="legend"><span><i class="sw w"></i>under</span><span><i class="sw e"></i>only just</span><span><i class="sw g"></i>covered</span></span></div>
+      <div class="grid" id="grid"></div>
+      <div class="hints" id="hints"></div>
+    </div>
+  </div>
+  <main><div class="wrap" id="sections"></div></main>
+</div>
+<div id="tab-meals" hidden>
   <div class="wrap">
-    <div class="gauges">
-      <div class="gauge" id="g-kcal">
-        <div class="lab">Calories</div>
-        <div class="val"><span id="kcal-val">—</span> <small>/ 2,250</small></div>
-        <div class="bar"><i id="kcal-bar"></i></div>
-      </div>
-      <div class="gauge" id="g-prot">
-        <div class="lab">Protein</div>
-        <div class="val"><span id="prot-val">—</span> <small>/ 132 g</small></div>
-        <div class="bar"><i id="prot-bar"></i></div>
-      </div>
-    </div>
-    <div class="target" id="target"></div>
-    <div class="statusrow">
-      <div class="miccount" id="miccount">Pick one of each to begin</div>
-      <button class="detailtoggle" id="detailtoggle" aria-expanded="true" aria-controls="detail">
-        Micronutrients <span class="chev">▾</span>
-      </button>
+    <div class="mealsintro">Build a meal from ingredients — it auto-calculates from a library of 56 common foods, and you can edit any value or enter everything by hand. Choose whether it's a breakfast, lunch or dinner, and it'll appear as an option on the Build tab.</div>
+    <button id="newmeal" class="primary">+ New custom meal</button>
+    <div id="customlist"></div>
+    <div id="editor" hidden>
+      <h3 id="editortitle">New custom meal</h3>
+      <label class="fld"><span>Meal name</span><input id="m-name" type="text" placeholder="e.g. Chickpea &amp; feta salad"></label>
+      <div class="fld" id="slotfld"><span>Goes in</span><div class="seg" id="m-slot">
+        <button type="button" data-slot="breakfast">Breakfast</button>
+        <button type="button" data-slot="lunch">Lunch</button>
+        <button type="button" data-slot="dinner">Dinner</button></div></div>
+      <div class="subhead">Ingredients</div>
+      <div id="ingrows"></div>
+      <div class="ingbtns" style="margin-top:6px"><button id="adding" class="ghost">+ Add ingredient</button><button id="scanbtn" class="ghost">▤ Scan barcode</button></div>
+      <div class="subhead">Nutrition</div>
+      <div class="seg nutmode" id="nutmode"><button type="button" data-mode="auto" class="on">Auto from ingredients</button><button type="button" data-mode="manual">Manual</button></div>
+      <div class="calcnote" id="calcnote"></div>
+      <div class="nutgrid" id="nutgrid"></div>
+      <div class="editoractions"><button id="savemeal" class="primary">Save meal</button><button id="cancelmeal" class="ghost">Cancel</button></div>
     </div>
   </div>
 </div>
-
-<div class="detail" id="detail">
-  <div class="wrap inner">
-    <div class="gridlab"><span>Every micronutrient, % of RDI</span>
-      <span class="legend"><span><i class="sw w"></i>under</span><span><i class="sw e"></i>only just</span><span><i class="sw g"></i>covered</span></span>
+<div class="modal" id="scanmodal" hidden>
+  <div class="sheet">
+    <div class="sheethead"><h3>Scan a barcode</h3><button class="ghost" id="scanclose">Close</button></div>
+    <div id="scanvideo"></div>
+    <div class="scanstatus" id="scanstatus">Point the camera at the barcode…</div>
+    <div class="scanmanual">
+      <span>Or type the barcode number</span>
+      <div class="scanrow"><input id="scancode" type="text" inputmode="numeric" placeholder="e.g. 5000159407236"><button class="primary" id="scanlookup">Look up</button></div>
     </div>
-    <div class="grid" id="grid"></div>
-    <div class="hints" id="hints"></div>
+    <div class="scanresult" id="scanresult" hidden>
+      <div class="scanname" id="scanname"></div>
+      <div class="scanmeta" id="scanmeta"></div>
+      <div class="scanrow"><input id="scangrams" type="number" inputmode="decimal" placeholder="Amount" value="100"><span class="gsuf">g</span><button class="primary" id="scanadd">Add to meal</button></div>
+      <div class="scannote">Micronutrients not printed on the label stay at 0 — the label rarely lists them. Values come from Open Food Facts; sanity-check anything odd.</div>
+    </div>
   </div>
 </div>
-
-<main>
-  <div class="wrap" id="sections"></div>
-</main>
-
-<footer class="wrap">
-  Estimates from standard food-composition data · iron shown at 18 mg (UK RNI 14.8 mg).<br>
-  Vitamin D &amp; omega-3 need oily fish or a supplement. Not medical advice.
-</footer>
-
+<datalist id="inglist"></datalist>
+<footer class="wrap">Estimates from standard food-composition data · iron shown at 18 mg (UK RNI 14.8 mg).<br>Vitamin D &amp; omega-3 need oily fish or a supplement. Not medical advice.</footer>
 <script>
-const DATA = {"targets":{"kcal":2250,"protein":132},"rdi":{"vitA":700,"vitC":75,"vitD":15,"vitE":15,"vitK":90,"B1":1.1,"B2":1.1,"B3":14,"B5":5,"B6":1.3,"biotin":30,"folate":400,"B12":2.4,"choline":425,"Ca":1000,"Fe":18,"Mg":320,"P":700,"K":2600,"Zn":8,"Cu":0.9,"Mn":1.8,"Se":55,"iodine":150,"Cr":25,"Mo":45,"o3":250},"micros":["vitA","vitC","vitD","vitE","vitK","B1","B2","B3","B5","B6","biotin","folate","B12","choline","Ca","Fe","Mg","P","K","Zn","Cu","Mn","Se","iodine","Cr","Mo","o3"],"short":{"vitA":"Vit A","vitC":"Vit C","vitD":"Vit D","vitE":"Vit E","vitK":"Vit K","B1":"B1","B2":"B2","B3":"B3","B5":"B5","B6":"B6","biotin":"B7","folate":"Folate","B12":"B12","choline":"Choline","Ca":"Calcium","Fe":"Iron","Mg":"Magnes.","P":"Phosph.","K":"Potass.","Zn":"Zinc","Cu":"Copper","Mn":"Mangan.","Se":"Selen.","iodine":"Iodine","Cr":"Chrom.","Mo":"Molybd.","o3":"Omega-3"},"full":{"vitA":"Vitamin A","vitC":"Vitamin C","vitD":"Vitamin D","vitE":"Vitamin E","vitK":"Vitamin K","B1":"Thiamin (B1)","B2":"Riboflavin (B2)","B3":"Niacin (B3)","B5":"Pantothenic acid (B5)","B6":"Vitamin B6","biotin":"Biotin (B7)","folate":"Folate (B9)","B12":"Vitamin B12","choline":"Choline","Ca":"Calcium","Fe":"Iron","Mg":"Magnesium","P":"Phosphorus","K":"Potassium","Zn":"Zinc","Cu":"Copper","Mn":"Manganese","Se":"Selenium","iodine":"Iodine","Cr":"Chromium","Mo":"Molybdenum","o3":"Omega-3 (EPA+DHA)"},"unit":{"vitA":"mcg","vitC":"mg","vitD":"mcg","vitE":"mg","vitK":"mcg","B1":"mg","B2":"mg","B3":"mg","B5":"mg","B6":"mg","biotin":"mcg","folate":"mcg","B12":"mcg","choline":"mg","Ca":"mg","Fe":"mg","Mg":"mg","P":"mg","K":"mg","Zn":"mg","Cu":"mg","Mn":"mg","Se":"mcg","iodine":"mcg","Cr":"mcg","Mo":"mcg","o3":"mg"},"hint":{"vitD":"Take a 10 mcg vitamin D3 capsule \u2014 food alone can't cover this without oily fish.","o3":"Have oily fish (salmon/mackerel/sardines) or an algae-oil capsule.","Fe":"Pair with vitamin C, avoid tea/coffee at that meal; get a ferritin test if you have symptoms.","Ca":"Add dairy or calcium-set tofu; scaling portions up usually fixes it.","iodine":"From dairy, eggs, white fish or a pinch of iodised salt \u2014 not kelp.","Cr":"Chromium is poorly measured in food data \u2014 broccoli, whole grains and egg yolk are the usual sources, so the real figure is likely higher than shown.","Mo":"Molybdenum comes mainly from legumes and grains; a lentil or bean side covers it."},"meals":{"breakfast":[{"id":"b1","code":"B1","name":"Scramble & yogurt bowl","kcal":640,"protein":46.5,"fat":32,"carb":44,"fibre":9,"oily":false,"veg":true,"ingredients":["3 large eggs","100 g spinach","40 g wholegrain bread","150 g greek yogurt","100 g blueberries","15 g sunflower seeds","1 Brazil nut","5 ml olive oil"],"nutrients":{"vitA":768.95,"vitC":19.91,"vitD":3.0,"vitE":10.54,"vitK":518.45,"B1":0.64,"B2":1.53,"B3":4.17,"B5":3.42,"B6":0.91,"biotin":39.07,"folate":284.73,"B12":2.46,"choline":506.87,"Ca":451.9,"Fe":8.51,"Mg":221.69,"P":780.3,"K":1184.66,"Zn":5.28,"Cu":0.79,"Mn":2.44,"Se":156.83,"iodine":110.19,"Cr":5.59,"Mo":57.8,"o3":60.0}},{"id":"b2","code":"B2","name":"Power oats & eggs","kcal":798,"protein":39.3,"fat":32,"carb":92,"fibre":12,"oily":false,"veg":true,"ingredients":["80 g rolled oats","250 ml semi-skimmed milk","2 large eggs","100 g banana","20 g pumpkin seeds","1 Brazil nut"],"nutrients":{"vitA":213.2,"vitC":9.08,"vitD":2.0,"vitE":2.23,"vitK":4.36,"B1":0.62,"B2":1.14,"B3":2.83,"B5":3.88,"B6":0.77,"biotin":43.12,"folate":117.58,"B12":2.02,"choline":389.72,"Ca":418.2,"Fe":7.7,"Mg":310.34,"P":1061.1,"K":1348.76,"Zn":7.04,"Cu":0.82,"Mn":4.14,"Se":140.16,"iodine":178.74,"Cr":6.34,"Mo":52.3,"o3":40.0}},{"id":"b3","code":"B3","name":"Yogurt protein bowl (no-cook)","kcal":702,"protein":64.2,"fat":25,"carb":59,"fibre":10,"oily":false,"veg":true,"ingredients":["250 g greek yogurt","1 scoop (30 g) whey protein","40 g rolled oats","100 g blueberries","17 almonds","15 g pumpkin seeds","1 Brazil nut"],"nutrients":{"vitA":35.65,"vitC":9.98,"vitD":0.0,"vitE":6.44,"vitK":20.89,"B1":0.47,"B2":1.35,"B3":3.02,"B5":2.13,"B6":0.39,"biotin":16.77,"folate":84.68,"B12":3.08,"choline":120.37,"Ca":518.9,"Fe":5.0,"Mg":276.54,"P":973.65,"K":1068.71,"Zn":6.3,"Cu":0.8,"Mn":3.02,"Se":134.54,"iodine":81.49,"Cr":5.59,"Mo":43.9,"o3":0.0}},{"id":"b4","code":"B4","name":"Cottage cheese, fruit & seeds","kcal":644,"protein":35.0,"fat":23,"carb":78,"fibre":11,"oily":false,"veg":true,"ingredients":["200 g cottage cheese","120 g banana","80 g blueberries","25 g sunflower seeds","40 g rolled oats","1 Brazil nut"],"nutrients":{"vitA":80.75,"vitC":18.55,"vitD":0.0,"vitE":9.74,"vitK":16.6,"B1":0.71,"B2":0.59,"B3":3.9,"B5":2.29,"B6":0.96,"biotin":15.37,"folate":123.23,"B12":0.86,"choline":83.67,"Ca":223.5,"Fe":3.95,"Mg":204.69,"P":712.0,"K":1031.61,"Zn":3.96,"Cu":0.88,"Mn":2.59,"Se":121.41,"iodine":62.29,"Cr":5.09,"Mo":44.3,"o3":0.0}},{"id":"b5","code":"B5","name":"Smoked salmon & eggs on toast","kcal":446,"protein":38.8,"fat":21,"carb":25,"fibre":6,"oily":true,"veg":false,"ingredients":["3 large eggs","60 g smoked salmon","40 g wholegrain bread","80 g spinach","100 g tomatoes","1 Brazil nut"],"nutrients":{"vitA":710.2,"vitC":22.0,"vitD":13.2,"vitE":4.98,"vitK":405.71,"B1":0.42,"B2":1.04,"B3":5.72,"B5":3.19,"B6":0.73,"biotin":37.12,"folate":225.98,"B12":3.13,"choline":521.12,"Ca":258.6,"Fe":7.35,"Mg":154.84,"P":578.0,"K":1048.16,"Zn":3.81,"Cu":0.5,"Mn":1.73,"Se":153.13,"iodine":88.64,"Cr":4.34,"Mo":37.9,"o3":960.0}},{"id":"b6","code":"B6","name":"Tofu scramble & greens","kcal":609,"protein":53.7,"fat":26,"carb":49,"fibre":13,"oily":false,"veg":true,"ingredients":["150 g firm tofu","40 g wholegrain bread","100 g spinach","75 g red pepper","150 g greek yogurt","80 g blueberries","15 g sunflower seeds","1 Brazil nut"],"nutrients":{"vitA":646.1,"vitC":114.12,"vitD":0.0,"vitE":9.36,"vitK":518.55,"B1":0.85,"B2":1.04,"B3":5.33,"B5":1.49,"B6":1.02,"biotin":12.62,"folate":291.03,"B12":1.12,"choline":111.17,"Ca":896.95,"Fe":10.18,"Mg":301.49,"P":785.4,"K":1390.46,"Zn":5.9,"Cu":1.29,"Mn":4.22,"Se":136.34,"iodine":52.24,"Cr":6.14,"Mo":180.55,"o3":0.0}},{"id":"b7","code":"B7","name":"Overnight oats, chia & whey","kcal":753,"protein":48.7,"fat":26,"carb":86,"fibre":17,"oily":false,"veg":true,"ingredients":["70 g rolled oats","250 ml semi-skimmed milk","1 scoop (30 g) whey protein","15 g chia seeds","100 g blueberries","12 almonds","1 Brazil nut"],"nutrients":{"vitA":83.0,"vitC":9.85,"vitD":0.0,"vitE":5.08,"vitK":20.9,"B1":0.7,"B2":1.09,"B3":3.48,"B5":2.66,"B6":0.35,"biotin":21.92,"folate":85.73,"B12":2.33,"choline":122.82,"Ca":633.8,"Fe":5.96,"Mg":265.89,"P":916.65,"K":1102.86,"Zn":6.5,"Cu":0.81,"Mn":3.7,"Se":132.83,"iodine":143.94,"Cr":6.14,"Mo":43.4,"o3":2670.0}}],"lunch":[{"id":"l1","code":"L1","name":"Sardines on toast + salad","kcal":465,"protein":35.1,"fat":22,"carb":31,"fibre":6,"oily":true,"veg":false,"ingredients":["100 g sardines","60 g wholegrain bread","60 g rocket/salad greens","75 g red pepper","9 ml olive oil"],"nutrients":{"vitA":221.15,"vitC":105.0,"vitD":4.8,"vitE":4.88,"vitK":79.55,"B1":0.34,"B2":0.47,"B3":8.53,"B5":1.5,"B6":0.55,"biotin":8.15,"folate":127.9,"B12":8.9,"choline":100.5,"Ca":547.45,"Fe":5.67,"Mg":121.8,"P":667.9,"K":926.73,"Zn":2.85,"Cu":0.41,"Mn":1.58,"Se":67.26,"iodine":34.95,"Cr":2.95,"Mo":25.25,"o3":1400.0}},{"id":"l2","code":"L2","name":"Tuna pasta salad","kcal":489,"protein":36.7,"fat":13,"carb":56,"fibre":5,"oily":false,"veg":false,"ingredients":["100 g tuna","160 g wholewheat pasta","100 g tomatoes","50 g red pepper","11 ml olive oil"],"nutrients":{"vitA":125.5,"vitC":78.0,"vitD":1.7,"vitE":3.74,"vitK":16.7,"B1":0.42,"B2":0.22,"B3":16.34,"B5":0.77,"B6":0.62,"biotin":6.1,"folate":70.8,"B12":2.5,"choline":56.0,"Ca":35.7,"Fe":3.42,"Mg":75.8,"P":329.8,"K":663.0,"Zn":1.59,"Cu":0.27,"Mn":0.66,"Se":121.65,"iodine":18.1,"Cr":4.1,"Mo":29.5,"o3":300.0}},{"id":"l3","code":"L3","name":"Prawn rice bowl","kcal":528,"protein":51.4,"fat":11,"carb":59,"fibre":8,"oily":false,"veg":false,"ingredients":["180 g prawns","180 g brown rice","120 g broccoli","50 g red pepper","9 ml olive oil"],"nutrients":{"vitA":187.1,"vitC":142.0,"vitD":0.18,"vitE":5.77,"vitK":178.12,"B1":0.33,"B2":0.28,"B3":8.36,"B5":1.89,"B6":0.93,"biotin":5.3,"folate":177.8,"B12":3.06,"choline":274.2,"Ca":195.5,"Fe":2.9,"Mg":171.6,"P":705.4,"K":1078.18,"Zn":4.62,"Cu":0.61,"Mn":2.37,"Se":91.97,"iodine":76.7,"Cr":20.9,"Mo":42.9,"o3":540.0}},{"id":"l4","code":"L4","name":"Lentil & brown-rice bowl","kcal":547,"protein":25.3,"fat":11,"carb":91,"fibre":21,"oily":false,"veg":true,"ingredients":["180 g lentils","180 g brown rice","120 g spinach","60 g red pepper","9 ml olive oil"],"nutrients":{"vitA":724.8,"vitC":91.5,"vitD":0.0,"vitE":4.75,"vitK":604.74,"B1":0.64,"B2":0.49,"B3":5.88,"B5":1.97,"B6":1.06,"biotin":15.0,"folate":535.8,"B12":0.0,"choline":101.4,"Ca":219.6,"Fe":11.46,"Mg":246.6,"P":586.8,"K":1504.88,"Zn":4.53,"Cu":0.85,"Mn":4.03,"Se":24.9,"iodine":6.6,"Cr":5.4,"Mo":175.8,"o3":0.0}},{"id":"l5","code":"L5","name":"Cottage cheese & egg salad box","kcal":481,"protein":37.8,"fat":22,"carb":33,"fibre":8,"oily":false,"veg":true,"ingredients":["150 g cottage cheese","2 large eggs","40 g wholegrain bread","60 g rocket/salad greens","100 g tomatoes","50 g avocado"],"nutrients":{"vitA":332.4,"vitC":28.0,"vitD":2.0,"vitE":3.11,"vitK":86.2,"B1":0.34,"B2":0.92,"B3":3.5,"B5":3.57,"B6":0.58,"biotin":27.8,"folate":195.5,"B12":1.54,"choline":352.0,"Ca":335.3,"Fe":4.3,"Mg":108.1,"P":602.5,"K":1094.9,"Zn":3.38,"Cu":0.42,"Mn":1.2,"Se":55.33,"iodine":89.7,"Cr":5.0,"Mo":38.0,"o3":40.0}},{"id":"l6","code":"L6","name":"Smoked salmon bagel-style","kcal":366,"protein":33.2,"fat":8,"carb":39,"fibre":6,"oily":true,"veg":false,"ingredients":["80 g smoked salmon","80 g wholegrain bread","60 g cottage cheese","40 g rocket/salad greens","80 g tomatoes"],"nutrients":{"vitA":115.4,"vitC":17.2,"vitD":13.6,"vitE":2.13,"vitK":54.08,"B1":0.47,"B2":0.39,"B3":7.88,"B5":1.67,"B6":0.44,"biotin":8.0,"folate":99.6,"B12":2.66,"choline":102.4,"Ca":216.2,"Fe":3.5,"Mg":107.6,"P":436.2,"K":739.6,"Zn":2.24,"Cu":0.34,"Mn":1.83,"Se":51.42,"iodine":55.6,"Cr":3.4,"Mo":32.8,"o3":1200.0}}],"dinner":[{"id":"d1","code":"D1","name":"Salmon, sweet potato & broccoli","kcal":682,"protein":53.6,"fat":27,"carb":63,"fibre":13,"oily":true,"veg":false,"ingredients":["180 g salmon fillet","250 g sweet potato","150 g broccoli","5 ml olive oil"],"nutrients":{"vitA":2542.5,"vitC":147.5,"vitD":19.8,"vitE":6.68,"vitK":220.43,"B1":0.7,"B2":1.15,"B3":19.88,"B5":5.78,"B6":2.11,"biotin":18.0,"folate":223.8,"B12":5.76,"choline":254.5,"Ca":176.6,"Fe":3.73,"Mg":151.2,"P":667.5,"K":2311.05,"Zn":2.15,"Cu":0.57,"Mn":1.57,"Se":67.7,"iodine":73.0,"Cr":25.3,"Mo":11.3,"o3":3960.0}},{"id":"d2","code":"D2","name":"Mackerel, quinoa & greens","kcal":643,"protein":40.8,"fat":31,"carb":51,"fibre":11,"oily":true,"veg":false,"ingredients":["120 g mackerel","180 g quinoa","150 g broccoli","50 g red pepper","5 ml olive oil"],"nutrients":{"vitA":254.0,"vitC":161.5,"vitD":19.2,"vitE":6.63,"vitK":223.0,"B1":0.44,"B2":1.0,"B3":12.84,"B5":2.63,"B6":1.14,"biotin":11.6,"folate":261.8,"B12":22.8,"choline":200.4,"Ca":112.1,"Fe":5.91,"Mg":193.5,"P":723.1,"K":1335.85,"Zn":3.86,"Cu":0.55,"Mn":1.44,"Se":64.25,"iodine":39.8,"Cr":24.5,"Mo":44.4,"o3":3120.0}},{"id":"d3","code":"D3","name":"Tofu & broccoli stir-fry with rice","kcal":656,"protein":43.2,"fat":28,"carb":67,"fibre":13,"oily":false,"veg":true,"ingredients":["200 g firm tofu","150 g broccoli","75 g red pepper","180 g brown rice","9 ml olive oil"],"nutrients":{"vitA":233.25,"vitC":193.7,"vitD":0.0,"vitE":4.66,"vitK":225.93,"B1":0.63,"B2":0.47,"B3":5.08,"B5":1.84,"B6":0.99,"biotin":8.05,"folate":261.7,"B12":0.0,"choline":136.7,"Ca":783.25,"Fe":7.72,"Mg":230.7,"P":680.0,"K":1112.63,"Zn":5.14,"Cu":1.07,"Mn":4.75,"Se":54.48,"iodine":12.05,"Cr":25.55,"Mo":222.75,"o3":0.0}},{"id":"d4","code":"D4","name":"Cod, potato & peas","kcal":614,"protein":58.7,"fat":11,"carb":70,"fibre":12,"oily":false,"veg":false,"ingredients":["200 g cod fillet","250 g potato","120 g peas","9 ml olive oil"],"nutrients":{"vitA":72.1,"vitC":51.3,"vitD":2.4,"vitE":2.58,"vitK":38.8,"B1":0.65,"B2":0.37,"B3":10.9,"B5":1.79,"B6":1.84,"biotin":9.7,"folate":168.0,"B12":2.0,"choline":228.6,"Ca":105.9,"Fe":5.39,"Mg":188.8,"P":795.4,"K":2542.78,"Zn":3.31,"Cu":0.58,"Mn":0.9,"Se":76.91,"iodine":223.7,"Cr":5.7,"Mo":32.5,"o3":400.0}},{"id":"d5","code":"D5","name":"Egg & veg shakshuka","kcal":595,"protein":37.4,"fat":35,"carb":35,"fibre":9,"oily":false,"veg":true,"ingredients":["3 large eggs","200 g tomatoes","100 g red pepper","100 g spinach","40 g wholegrain bread","30 g cheddar cheese","9 ml olive oil"],"nutrients":{"vitA":1084.5,"vitC":166.0,"vitD":3.18,"vitE":7.79,"vitK":522.97,"B1":0.46,"B2":1.26,"B3":4.43,"B5":3.26,"B6":1.05,"biotin":37.8,"folate":317.4,"B12":1.67,"choline":494.1,"Ca":506.1,"Fe":8.44,"Mg":177.8,"P":665.4,"K":1487.48,"Zn":4.97,"Cu":0.53,"Mn":2.08,"Se":61.85,"iodine":76.0,"Cr":6.2,"Mo":46.0,"o3":60.0}},{"id":"d6","code":"D6","name":"Tempeh, sweet potato & greens","kcal":582,"protein":38.1,"fat":25,"carb":62,"fibre":11,"oily":false,"veg":true,"ingredients":["150 g tempeh","200 g sweet potato","120 g spinach","50 g red pepper","9 ml olive oil"],"nutrients":{"vitA":2627.3,"vitC":116.0,"vitD":0.0,"vitE":5.87,"vitK":604.7,"B1":0.47,"B2":1.07,"B3":8.0,"B5":2.3,"B6":1.34,"biotin":11.6,"folate":246.2,"B12":0.15,"choline":98.0,"Ca":409.2,"Fe":10.03,"Mg":285.9,"P":587.2,"K":2232.78,"Zn":3.33,"Cu":1.37,"Mn":4.08,"Se":2.25,"iodine":6.4,"Cr":5.2,"Mo":152.5,"o3":0.0}},{"id":"d7","code":"D7","name":"Edamame & tofu rice bowl","kcal":662,"protein":44.6,"fat":25,"carb":72,"fibre":17,"oily":false,"veg":true,"ingredients":["150 g edamame","120 g firm tofu","180 g brown rice","120 g broccoli","5 ml olive oil"],"nutrients":{"vitA":92.4,"vitC":87.12,"vitD":0.0,"vitE":3.63,"vitK":216.66,"B1":0.74,"B2":0.52,"B3":5.19,"B5":1.94,"B6":0.78,"biotin":8.4,"folate":638.1,"B12":0.0,"choline":180.3,"Ca":580.5,"Fe":8.46,"Mg":258.9,"P":741.9,"K":1376.45,"Zn":5.49,"Cu":1.23,"Mn":5.15,"Se":41.82,"iodine":10.5,"Cr":21.3,"Mo":222.6,"o3":0.0}}]},"boosters":[{"id":"sardine","name":"Tin of sardines (100 g)","kcal":208,"protein":25.0,"fat":11.0,"carb":0.0,"boosts":["Omega-3","B12","Selen.","Phosph.","Calcium"],"boostKeys":["o3","B12","Se","P","Ca","B3","vitD","Cu","B2","iodine","choline","biotin","Zn","Fe","K"],"nutrients":{"vitA":32.0,"vitC":0.0,"vitD":4.8,"vitE":2.0,"vitK":2.6,"B1":0.04,"B2":0.23,"B3":5.2,"B5":0.64,"B6":0.17,"biotin":5.0,"folate":10.0,"B12":8.9,"choline":75.0,"Ca":382.0,"Fe":2.9,"Mg":39.0,"P":490.0,"K":397.0,"Zn":1.3,"Cu":0.19,"Mn":0.11,"Se":52.0,"iodine":30.0,"Cr":1.0,"Mo":2.0,"o3":1400.0}},{"id":"mackerel","name":"Tin of mackerel (100 g)","kcal":262,"protein":24.0,"fat":18.0,"carb":0.0,"boosts":["Omega-3","B12","Vit D","Selen.","B3"],"boostKeys":["o3","B12","vitD","Se","B3","B2","P","B6","choline","B5","biotin","iodine","K"],"nutrients":{"vitA":50.0,"vitC":0.0,"vitD":16.0,"vitE":1.5,"vitK":5.0,"B1":0.12,"B2":0.5,"B3":9.0,"B5":0.86,"B6":0.4,"biotin":5.0,"folate":1.0,"B12":19.0,"choline":80.0,"Ca":15.0,"Fe":1.6,"Mg":34.0,"P":280.0,"K":401.0,"Zn":0.9,"Cu":0.1,"Mn":0.02,"Se":44.0,"iodine":25.0,"Cr":1.0,"Mo":2.0,"o3":2600.0}},{"id":"gyogurt","name":"Greek yogurt (170 g)","kcal":100,"protein":17.0,"fat":0.7,"carb":6.1,"boosts":["B12","B2","Iodine","Phosph.","Molybd."],"boostKeys":["B12","B2","iodine","P","Mo","Se","Ca"],"nutrients":{"vitA":1.7,"vitC":0.0,"vitD":0.0,"vitE":0.02,"vitK":0.0,"B1":0.03,"B2":0.48,"B3":0.34,"B5":0.56,"B6":0.1,"biotin":3.4,"folate":11.9,"B12":1.27,"choline":25.5,"Ca":187.0,"Fe":0.12,"Mg":18.7,"P":229.5,"K":239.7,"Zn":0.85,"Cu":0.02,"Mn":0.02,"Se":16.49,"iodine":51.0,"Cr":1.7,"Mo":13.6,"o3":0.0}},{"id":"cottage","name":"Cottage cheese (150 g)","kcal":126,"protein":16.5,"fat":3.4,"carb":5.1,"boosts":["Phosph.","Iodine","B12","Selen.","B2"],"boostKeys":["P","iodine","B12","Se","B2","Mo","B5"],"nutrients":{"vitA":55.5,"vitC":0.0,"vitD":0.0,"vitE":0.01,"vitK":0.0,"B1":0.04,"B2":0.24,"B3":0.2,"B5":0.75,"B6":0.08,"biotin":3.0,"folate":18.0,"B12":0.65,"choline":27.0,"Ca":124.5,"Fe":0.11,"Mg":12.0,"P":238.5,"K":156.0,"Zn":0.6,"Cu":0.04,"Mn":0.0,"Se":14.25,"iodine":45.0,"Cr":1.5,"Mo":9.0,"o3":0.0}},{"id":"cheddar","name":"Cheese (30 g)","kcal":121,"protein":7.5,"fat":9.9,"carb":0.4,"boosts":["Phosph.","Calcium"],"boostKeys":["P","Ca"],"nutrients":{"vitA":79.5,"vitC":0.0,"vitD":0.18,"vitE":0.21,"vitK":0.72,"B1":0.01,"B2":0.12,"B3":0.02,"B5":0.12,"B6":0.02,"biotin":0.6,"folate":8.1,"B12":0.33,"choline":5.1,"Ca":216.3,"Fe":0.2,"Mg":8.4,"P":153.6,"K":29.4,"Zn":0.93,"Cu":0.01,"Mn":0.01,"Se":4.2,"iodine":9.0,"Cr":0.3,"Mo":1.5,"o3":0.0}},{"id":"egg","name":"1 boiled egg","kcal":72,"protein":6.3,"fat":4.8,"carb":0.3,"boosts":["Choline","B7","Selen.","B2","B12"],"boostKeys":["choline","biotin","Se","B2","B12","B5"],"nutrients":{"vitA":80.0,"vitC":0.0,"vitD":1.0,"vitE":0.53,"vitK":0.15,"B1":0.02,"B2":0.23,"B3":0.04,"B5":0.77,"B6":0.09,"biotin":10.0,"folate":23.5,"B12":0.45,"choline":147.0,"Ca":28.0,"Fe":0.88,"Mg":6.0,"P":99.0,"K":69.0,"Zn":0.65,"Cu":0.04,"Mn":0.01,"Se":15.35,"iodine":20.0,"Cr":0.5,"Mo":4.5,"o3":20.0}},{"id":"pumpkinseed","name":"Pumpkin seeds (20 g)","kcal":112,"protein":6.0,"fat":9.8,"carb":2.2,"boosts":["Mangan.","Magnes.","Phosph.","Copper","Zinc"],"boostKeys":["Mn","Mg","P","Cu","Zn"],"nutrients":{"vitA":0.2,"vitC":0.38,"vitD":0.0,"vitE":0.44,"vitK":1.46,"B1":0.05,"B2":0.03,"B3":0.98,"B5":0.07,"B6":0.03,"biotin":1.0,"folate":11.6,"B12":0.0,"choline":12.6,"Ca":9.2,"Fe":1.76,"Mg":118.4,"P":246.6,"K":161.8,"Zn":1.56,"Cu":0.26,"Mn":0.9,"Se":1.88,"iodine":0.2,"Cr":0.2,"Mo":4.0,"o3":0.0}},{"id":"sunflowerseed","name":"Sunflower seeds (25 g)","kcal":146,"protein":5.2,"fat":12.8,"carb":5.0,"boosts":["Vit E","Copper","B1","Mangan.","Magnes."],"boostKeys":["vitE","Cu","B1","Mn","Mg","B6","Se","P","Mo","Zn"],"nutrients":{"vitA":0.75,"vitC":0.35,"vitD":0.0,"vitE":8.75,"vitK":0.0,"B1":0.38,"B2":0.09,"B3":2.08,"B5":0.28,"B6":0.33,"biotin":1.25,"folate":56.75,"B12":0.0,"choline":13.75,"Ca":19.5,"Fe":1.3,"Mg":81.25,"P":165.0,"K":161.25,"Zn":1.25,"Cu":0.45,"Mn":0.5,"Se":13.25,"iodine":0.25,"Cr":0.25,"Mo":7.5,"o3":0.0}},{"id":"almond","name":"Almonds (~20)","kcal":145,"protein":5.2,"fat":12.5,"carb":5.5,"boosts":["Vit E","Mangan.","Copper","B2","Magnes."],"boostKeys":["vitE","Mn","Cu","B2","Mg","P"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":6.4,"vitK":0.0,"B1":0.05,"B2":0.28,"B3":0.9,"B5":0.12,"B6":0.04,"biotin":1.25,"folate":11.0,"B12":0.0,"choline":13.0,"Ca":67.25,"Fe":0.93,"Mg":67.5,"P":120.25,"K":183.25,"Zn":0.78,"Cu":0.25,"Mn":0.55,"Se":1.0,"iodine":0.25,"Cr":0.25,"Mo":2.5,"o3":0.0}},{"id":"brazilg","name":"1 Brazil nut","kcal":26,"protein":0.6,"fat":2.7,"carb":0.5,"boosts":["Selen."],"boostKeys":["Se"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.23,"vitK":0.0,"B1":0.02,"B2":0.0,"B3":0.01,"B5":0.01,"B6":0.0,"biotin":0.12,"folate":0.88,"B12":0.0,"choline":1.12,"Ca":6.4,"Fe":0.1,"Mg":15.04,"P":29.0,"K":26.36,"Zn":0.16,"Cu":0.07,"Mn":0.05,"Se":76.68,"iodine":0.04,"Cr":0.04,"Mo":0.8,"o3":0.0}},{"id":"darkchoc","name":"Dark chocolate 85% (20 g)","kcal":120,"protein":1.6,"fat":8.6,"carb":9.2,"boosts":["Copper","Mangan."],"boostKeys":["Cu","Mn"],"nutrients":{"vitA":0.4,"vitC":0.0,"vitD":0.0,"vitE":0.12,"vitK":1.4,"B1":0.01,"B2":0.02,"B3":0.22,"B5":0.08,"B6":0.01,"biotin":0.0,"folate":0.6,"B12":0.0,"choline":2.4,"Ca":14.6,"Fe":2.4,"Mg":45.6,"P":61.6,"K":143.0,"Zn":0.66,"Cu":0.36,"Mn":0.38,"Se":1.36,"iodine":0.0,"Cr":0.2,"Mo":1.0,"o3":0.0}},{"id":"edamame","name":"Edamame (100 g)","kcal":121,"protein":11.0,"fat":5.0,"carb":9.0,"boosts":["Molybd.","Folate","Mangan.","Copper","Vit K"],"boostKeys":["Mo","folate","Mn","Cu","vitK","P","Mg","B1","K","Zn"],"nutrients":{"vitA":0.0,"vitC":6.0,"vitD":0.0,"vitE":0.7,"vitK":27.0,"B1":0.2,"B2":0.16,"B3":0.9,"B5":0.4,"B6":0.1,"biotin":2.0,"folate":311.0,"B12":0.0,"choline":55.0,"Ca":63.0,"Fe":2.3,"Mg":61.0,"P":169.0,"K":436.0,"Zn":1.3,"Cu":0.34,"Mn":1.0,"Se":1.0,"iodine":1.0,"Cr":1.0,"Mo":50.0,"o3":0.0}},{"id":"avocado","name":"\u00bd avocado","kcal":120,"protein":1.5,"fat":11.2,"carb":6.8,"boosts":["B5","Vit K","Copper","Folate","B6"],"boostKeys":["B5","vitK","Cu","folate","B6"],"nutrients":{"vitA":5.25,"vitC":7.5,"vitD":0.0,"vitE":1.58,"vitK":15.75,"B1":0.05,"B2":0.1,"B3":1.27,"B5":1.05,"B6":0.2,"biotin":3.0,"folate":60.75,"B12":0.0,"choline":10.5,"Ca":9.0,"Fe":0.41,"Mg":21.75,"P":39.0,"K":363.75,"Zn":0.48,"Cu":0.14,"Mn":0.11,"Se":0.3,"iodine":0.75,"Cr":0.75,"Mo":3.0,"o3":0.0}},{"id":"orange","name":"1 orange","kcal":61,"protein":1.2,"fat":0.1,"carb":15.6,"boosts":["Vit C"],"boostKeys":["vitC"],"nutrients":{"vitA":14.3,"vitC":68.9,"vitD":0.0,"vitE":0.23,"vitK":0.0,"B1":0.12,"B2":0.05,"B3":0.36,"B5":0.33,"B6":0.08,"biotin":1.3,"folate":39.0,"B12":0.0,"choline":10.4,"Ca":52.0,"Fe":0.13,"Mg":13.0,"P":18.2,"K":235.3,"Zn":0.09,"Cu":0.05,"Mn":0.04,"Se":0.65,"iodine":1.3,"Cr":1.3,"Mo":6.5,"o3":0.0}},{"id":"kiwi","name":"1 kiwi","kcal":46,"protein":0.8,"fat":0.4,"carb":11.2,"boosts":["Vit C","Vit K"],"boostKeys":["vitC","vitK"],"nutrients":{"vitA":3.0,"vitC":69.75,"vitD":0.0,"vitE":1.12,"vitK":30.0,"B1":0.02,"B2":0.02,"B3":0.26,"B5":0.14,"B6":0.04,"biotin":0.75,"folate":18.75,"B12":0.0,"choline":6.0,"Ca":25.5,"Fe":0.23,"Mg":12.75,"P":25.5,"K":234.0,"Zn":0.11,"Cu":0.1,"Mn":0.08,"Se":0.15,"iodine":0.75,"Cr":0.75,"Mo":3.75,"o3":0.0}},{"id":"banana","name":"1 banana","kcal":107,"protein":1.3,"fat":0.4,"carb":27.6,"boosts":["B6","Molybd.","Mangan.","Potass."],"boostKeys":["B6","Mo","Mn","K"],"nutrients":{"vitA":3.6,"vitC":10.44,"vitD":0.0,"vitE":0.12,"vitK":0.6,"B1":0.04,"B2":0.08,"B3":0.79,"B5":0.4,"B6":0.44,"biotin":1.2,"folate":24.0,"B12":0.0,"choline":12.0,"Ca":6.0,"Fe":0.31,"Mg":32.4,"P":26.4,"K":429.6,"Zn":0.18,"Cu":0.1,"Mn":0.32,"Se":1.2,"iodine":1.2,"Cr":1.2,"Mo":12.0,"o3":0.0}},{"id":"carrot","name":"1 carrot","kcal":33,"protein":0.7,"fat":0.2,"carb":8.0,"boosts":["Vit A"],"boostKeys":["vitA"],"nutrients":{"vitA":668.0,"vitC":4.72,"vitD":0.0,"vitE":0.53,"vitK":10.56,"B1":0.06,"B2":0.05,"B3":0.8,"B5":0.22,"B6":0.11,"biotin":0.0,"folate":15.2,"B12":0.0,"choline":7.04,"Ca":26.4,"Fe":0.24,"Mg":9.6,"P":28.0,"K":256.0,"Zn":0.19,"Cu":0.04,"Mn":0.11,"Se":0.08,"iodine":0.0,"Cr":0.8,"Mo":0.8,"o3":0.0}},{"id":"iodsaltg","name":"\u00bc tsp iodised salt","kcal":0,"protein":0.0,"fat":0.0,"carb":0.0,"boosts":["Iodine"],"boostKeys":["iodine"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.0,"vitK":0.0,"B1":0.0,"B2":0.0,"B3":0.0,"B5":0.0,"B6":0.0,"biotin":0.0,"folate":0.0,"B12":0.0,"choline":0.0,"Ca":0.0,"Fe":0.0,"Mg":0.0,"P":0.0,"K":0.0,"Zn":0.0,"Cu":0.0,"Mn":0.0,"Se":0.0,"iodine":36.0,"Cr":0.0,"Mo":0.0,"o3":0.0}},{"id":"lentils","name":"Lentils (150 g)","kcal":174,"protein":13.5,"fat":0.6,"carb":30.0,"boosts":["Molybd.","Folate","Copper","Mangan.","Phosph."],"boostKeys":["Mo","folate","Cu","Mn","P","Fe","biotin","Zn","B1","K","B6","B5","Mg"],"nutrients":{"vitA":1.5,"vitC":2.25,"vitD":0.0,"vitE":0.17,"vitK":2.55,"B1":0.26,"B2":0.11,"B3":1.65,"B5":0.96,"B6":0.27,"biotin":7.5,"folate":271.5,"B12":0.0,"choline":48.0,"Ca":28.5,"Fe":4.95,"Mg":54.0,"P":270.0,"K":553.5,"Zn":1.95,"Cu":0.38,"Mn":0.75,"Se":4.2,"iodine":1.5,"Cr":1.5,"Mo":105.0,"o3":0.0}},{"id":"tofuca","name":"Firm tofu (150 g)","kcal":216,"protein":25.5,"fat":13.0,"carb":4.2,"boosts":["Molybd.","Mangan.","Copper","Calcium","Selen."],"boostKeys":["Mo","Mn","Cu","Ca","Se","P","Zn","Mg","Fe","B1"],"nutrients":{"vitA":0.0,"vitC":0.15,"vitD":0.0,"vitE":0.01,"vitK":3.6,"B1":0.24,"B2":0.15,"B3":0.6,"B5":0.15,"B6":0.15,"biotin":3.0,"folate":43.5,"B12":0.0,"choline":42.0,"Ca":525.0,"Fe":4.05,"Mg":90.0,"P":285.0,"K":270.0,"Zn":2.4,"Cu":0.6,"Mn":1.8,"Se":25.5,"iodine":1.5,"Cr":1.5,"Mo":135.0,"o3":0.0}}]};
+const DATA = {"targets":{"kcal":2250,"protein":132},"rdi":{"vitA":700,"vitC":75,"vitD":15,"vitE":15,"vitK":90,"B1":1.1,"B2":1.1,"B3":14,"B5":5,"B6":1.3,"biotin":30,"folate":400,"B12":2.4,"choline":425,"Ca":1000,"Fe":18,"Mg":320,"P":700,"K":2600,"Zn":8,"Cu":0.9,"Mn":1.8,"Se":55,"iodine":150,"Cr":25,"Mo":45,"o3":250},"micros":["vitA","vitC","vitD","vitE","vitK","B1","B2","B3","B5","B6","biotin","folate","B12","choline","Ca","Fe","Mg","P","K","Zn","Cu","Mn","Se","iodine","Cr","Mo","o3"],"short":{"vitA":"Vit A","vitC":"Vit C","vitD":"Vit D","vitE":"Vit E","vitK":"Vit K","B1":"B1","B2":"B2","B3":"B3","B5":"B5","B6":"B6","biotin":"B7","folate":"Folate","B12":"B12","choline":"Choline","Ca":"Calcium","Fe":"Iron","Mg":"Magnes.","P":"Phosph.","K":"Potass.","Zn":"Zinc","Cu":"Copper","Mn":"Mangan.","Se":"Selen.","iodine":"Iodine","Cr":"Chrom.","Mo":"Molybd.","o3":"Omega-3"},"full":{"vitA":"Vitamin A","vitC":"Vitamin C","vitD":"Vitamin D","vitE":"Vitamin E","vitK":"Vitamin K","B1":"Thiamin (B1)","B2":"Riboflavin (B2)","B3":"Niacin (B3)","B5":"Pantothenic acid (B5)","B6":"Vitamin B6","biotin":"Biotin (B7)","folate":"Folate (B9)","B12":"Vitamin B12","choline":"Choline","Ca":"Calcium","Fe":"Iron","Mg":"Magnesium","P":"Phosphorus","K":"Potassium","Zn":"Zinc","Cu":"Copper","Mn":"Manganese","Se":"Selenium","iodine":"Iodine","Cr":"Chromium","Mo":"Molybdenum","o3":"Omega-3 (EPA+DHA)"},"unit":{"vitA":"mcg","vitC":"mg","vitD":"mcg","vitE":"mg","vitK":"mcg","B1":"mg","B2":"mg","B3":"mg","B5":"mg","B6":"mg","biotin":"mcg","folate":"mcg","B12":"mcg","choline":"mg","Ca":"mg","Fe":"mg","Mg":"mg","P":"mg","K":"mg","Zn":"mg","Cu":"mg","Mn":"mg","Se":"mcg","iodine":"mcg","Cr":"mcg","Mo":"mcg","o3":"mg"},"hint":{"vitD":"Take a 10 mcg vitamin D3 capsule \u2014 food alone can't cover this without oily fish.","o3":"Have oily fish (salmon/mackerel/sardines) or an algae-oil capsule.","Fe":"Pair with vitamin C, avoid tea/coffee at that meal; get a ferritin test if you have symptoms.","Ca":"Add dairy or calcium-set tofu; scaling portions up usually fixes it.","iodine":"From dairy, eggs, white fish or a pinch of iodised salt \u2014 not kelp.","Cr":"Chromium is poorly measured in food data \u2014 broccoli, whole grains and egg yolk are the usual sources, so the real figure is likely higher than shown.","Mo":"Molybdenum comes mainly from legumes and grains; a lentil or bean side covers it."},"meals":{"breakfast":[{"id":"b1","code":"B1","name":"Scramble & yogurt bowl","kcal":640,"protein":46.5,"fat":32,"carb":44,"fibre":9,"oily":false,"veg":true,"ingredients":["3 large eggs","100 g spinach","40 g wholegrain bread","150 g greek yogurt","100 g blueberries","15 g sunflower seeds","1 Brazil nut","5 ml olive oil"],"nutrients":{"vitA":768.95,"vitC":19.91,"vitD":3.0,"vitE":10.54,"vitK":518.45,"B1":0.64,"B2":1.53,"B3":4.17,"B5":3.42,"B6":0.91,"biotin":39.07,"folate":284.73,"B12":2.46,"choline":506.87,"Ca":451.9,"Fe":8.51,"Mg":221.69,"P":780.3,"K":1184.66,"Zn":5.28,"Cu":0.79,"Mn":2.44,"Se":156.83,"iodine":110.19,"Cr":5.59,"Mo":57.8,"o3":60.0},"items":[{"name":"Whole egg (large, ~50g)","amount":150,"unit":"g","state":""},{"name":"Spinach, cooked","amount":100,"unit":"g","state":""},{"name":"Wholegrain bread","amount":40,"unit":"g","state":""},{"name":"Greek yogurt (0-2%)","amount":150,"unit":"g","state":""},{"name":"Blueberries","amount":100,"unit":"g","state":""},{"name":"Sunflower seeds","amount":15,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""},{"name":"Olive oil","amount":5,"unit":"g","state":""}]},{"id":"b2","code":"B2","name":"Power oats & eggs","kcal":798,"protein":39.3,"fat":32,"carb":92,"fibre":12,"oily":false,"veg":true,"ingredients":["80 g rolled oats","250 ml semi-skimmed milk","2 large eggs","100 g banana","20 g pumpkin seeds","1 Brazil nut"],"nutrients":{"vitA":213.2,"vitC":9.08,"vitD":2.0,"vitE":2.23,"vitK":4.36,"B1":0.62,"B2":1.14,"B3":2.83,"B5":3.88,"B6":0.77,"biotin":43.12,"folate":117.58,"B12":2.02,"choline":389.72,"Ca":418.2,"Fe":7.7,"Mg":310.34,"P":1061.1,"K":1348.76,"Zn":7.04,"Cu":0.82,"Mn":4.14,"Se":140.16,"iodine":178.74,"Cr":6.34,"Mo":52.3,"o3":40.0},"items":[{"name":"Oats","amount":80,"unit":"g","state":"raw"},{"name":"Semi-skimmed milk","amount":250,"unit":"g","state":""},{"name":"Whole egg (large, ~50g)","amount":100,"unit":"g","state":""},{"name":"Banana","amount":100,"unit":"g","state":""},{"name":"Pumpkin seeds","amount":20,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]},{"id":"b3","code":"B3","name":"Yogurt protein bowl (no-cook)","kcal":702,"protein":64.2,"fat":25,"carb":59,"fibre":10,"oily":false,"veg":true,"ingredients":["250 g greek yogurt","1 scoop (30 g) whey protein","40 g rolled oats","100 g blueberries","17 almonds","15 g pumpkin seeds","1 Brazil nut"],"nutrients":{"vitA":35.65,"vitC":9.98,"vitD":0.0,"vitE":6.44,"vitK":20.89,"B1":0.47,"B2":1.35,"B3":3.02,"B5":2.13,"B6":0.39,"biotin":16.77,"folate":84.68,"B12":3.08,"choline":120.37,"Ca":518.9,"Fe":5.0,"Mg":276.54,"P":973.65,"K":1068.71,"Zn":6.3,"Cu":0.8,"Mn":3.02,"Se":134.54,"iodine":81.49,"Cr":5.59,"Mo":43.9,"o3":0.0},"items":[{"name":"Greek yogurt (0-2%)","amount":250,"unit":"g","state":""},{"name":"Whey protein","amount":30,"unit":"g","state":""},{"name":"Oats","amount":40,"unit":"g","state":"raw"},{"name":"Blueberries","amount":100,"unit":"g","state":""},{"name":"Almonds","amount":20,"unit":"g","state":""},{"name":"Pumpkin seeds","amount":15,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]},{"id":"b4","code":"B4","name":"Cottage cheese, fruit & seeds","kcal":644,"protein":35.0,"fat":23,"carb":78,"fibre":11,"oily":false,"veg":true,"ingredients":["200 g cottage cheese","120 g banana","80 g blueberries","25 g sunflower seeds","40 g rolled oats","1 Brazil nut"],"nutrients":{"vitA":80.75,"vitC":18.55,"vitD":0.0,"vitE":9.74,"vitK":16.6,"B1":0.71,"B2":0.59,"B3":3.9,"B5":2.29,"B6":0.96,"biotin":15.37,"folate":123.23,"B12":0.86,"choline":83.67,"Ca":223.5,"Fe":3.95,"Mg":204.69,"P":712.0,"K":1031.61,"Zn":3.96,"Cu":0.88,"Mn":2.59,"Se":121.41,"iodine":62.29,"Cr":5.09,"Mo":44.3,"o3":0.0},"items":[{"name":"Cottage cheese (low-fat)","amount":200,"unit":"g","state":""},{"name":"Banana","amount":120,"unit":"g","state":""},{"name":"Blueberries","amount":80,"unit":"g","state":""},{"name":"Sunflower seeds","amount":25,"unit":"g","state":""},{"name":"Oats","amount":40,"unit":"g","state":"raw"},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]},{"id":"b5","code":"B5","name":"Smoked salmon & eggs on toast","kcal":446,"protein":38.8,"fat":21,"carb":25,"fibre":6,"oily":true,"veg":false,"ingredients":["3 large eggs","60 g smoked salmon","40 g wholegrain bread","80 g spinach","100 g tomatoes","1 Brazil nut"],"nutrients":{"vitA":710.2,"vitC":22.0,"vitD":13.2,"vitE":4.98,"vitK":405.71,"B1":0.42,"B2":1.04,"B3":5.72,"B5":3.19,"B6":0.73,"biotin":37.12,"folate":225.98,"B12":3.13,"choline":521.12,"Ca":258.6,"Fe":7.35,"Mg":154.84,"P":578.0,"K":1048.16,"Zn":3.81,"Cu":0.5,"Mn":1.73,"Se":153.13,"iodine":88.64,"Cr":4.34,"Mo":37.9,"o3":960.0},"items":[{"name":"Whole egg (large, ~50g)","amount":150,"unit":"g","state":""},{"name":"Smoked salmon","amount":60,"unit":"g","state":""},{"name":"Wholegrain bread","amount":40,"unit":"g","state":""},{"name":"Spinach, cooked","amount":80,"unit":"g","state":""},{"name":"Tomatoes","amount":100,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]},{"id":"b6","code":"B6","name":"Tofu scramble & greens","kcal":609,"protein":53.7,"fat":26,"carb":49,"fibre":13,"oily":false,"veg":true,"ingredients":["150 g firm tofu","40 g wholegrain bread","100 g spinach","75 g red pepper","150 g greek yogurt","80 g blueberries","15 g sunflower seeds","1 Brazil nut"],"nutrients":{"vitA":646.1,"vitC":114.12,"vitD":0.0,"vitE":9.36,"vitK":518.55,"B1":0.85,"B2":1.04,"B3":5.33,"B5":1.49,"B6":1.02,"biotin":12.62,"folate":291.03,"B12":1.12,"choline":111.17,"Ca":896.95,"Fe":10.18,"Mg":301.49,"P":785.4,"K":1390.46,"Zn":5.9,"Cu":1.29,"Mn":4.22,"Se":136.34,"iodine":52.24,"Cr":6.14,"Mo":180.55,"o3":0.0},"items":[{"name":"Firm tofu (calcium-set)","amount":150,"unit":"g","state":""},{"name":"Wholegrain bread","amount":40,"unit":"g","state":""},{"name":"Spinach, cooked","amount":100,"unit":"g","state":""},{"name":"Red pepper","amount":75,"unit":"g","state":""},{"name":"Greek yogurt (0-2%)","amount":150,"unit":"g","state":""},{"name":"Blueberries","amount":80,"unit":"g","state":""},{"name":"Sunflower seeds","amount":15,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]},{"id":"b7","code":"B7","name":"Overnight oats, chia & whey","kcal":753,"protein":48.7,"fat":26,"carb":86,"fibre":17,"oily":false,"veg":true,"ingredients":["70 g rolled oats","250 ml semi-skimmed milk","1 scoop (30 g) whey protein","15 g chia seeds","100 g blueberries","12 almonds","1 Brazil nut"],"nutrients":{"vitA":83.0,"vitC":9.85,"vitD":0.0,"vitE":5.08,"vitK":20.9,"B1":0.7,"B2":1.09,"B3":3.48,"B5":2.66,"B6":0.35,"biotin":21.92,"folate":85.73,"B12":2.33,"choline":122.82,"Ca":633.8,"Fe":5.96,"Mg":265.89,"P":916.65,"K":1102.86,"Zn":6.5,"Cu":0.81,"Mn":3.7,"Se":132.83,"iodine":143.94,"Cr":6.14,"Mo":43.4,"o3":2670.0},"items":[{"name":"Oats","amount":70,"unit":"g","state":"raw"},{"name":"Semi-skimmed milk","amount":250,"unit":"g","state":""},{"name":"Whey protein","amount":30,"unit":"g","state":""},{"name":"Chia seeds","amount":15,"unit":"g","state":""},{"name":"Blueberries","amount":100,"unit":"g","state":""},{"name":"Almonds","amount":15,"unit":"g","state":""},{"name":"Brazil nut","amount":4,"unit":"g","state":""}]}],"lunch":[{"id":"l1","code":"L1","name":"Sardines on toast + salad","kcal":465,"protein":35.1,"fat":22,"carb":31,"fibre":6,"oily":true,"veg":false,"ingredients":["100 g sardines","60 g wholegrain bread","60 g rocket/salad greens","75 g red pepper","9 ml olive oil"],"nutrients":{"vitA":221.15,"vitC":105.0,"vitD":4.8,"vitE":4.88,"vitK":79.55,"B1":0.34,"B2":0.47,"B3":8.53,"B5":1.5,"B6":0.55,"biotin":8.15,"folate":127.9,"B12":8.9,"choline":100.5,"Ca":547.45,"Fe":5.67,"Mg":121.8,"P":667.9,"K":926.73,"Zn":2.85,"Cu":0.41,"Mn":1.58,"Se":67.26,"iodine":34.95,"Cr":2.95,"Mo":25.25,"o3":1400.0},"items":[{"name":"Sardines, canned (in oil, drained)","amount":100,"unit":"g","state":""},{"name":"Wholegrain bread","amount":60,"unit":"g","state":""},{"name":"Rocket/salad greens","amount":60,"unit":"g","state":""},{"name":"Red pepper","amount":75,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"l2","code":"L2","name":"Tuna pasta salad","kcal":489,"protein":36.7,"fat":13,"carb":56,"fibre":5,"oily":false,"veg":false,"ingredients":["100 g tuna","160 g wholewheat pasta","100 g tomatoes","50 g red pepper","11 ml olive oil"],"nutrients":{"vitA":125.5,"vitC":78.0,"vitD":1.7,"vitE":3.74,"vitK":16.7,"B1":0.42,"B2":0.22,"B3":16.34,"B5":0.77,"B6":0.62,"biotin":6.1,"folate":70.8,"B12":2.5,"choline":56.0,"Ca":35.7,"Fe":3.42,"Mg":75.8,"P":329.8,"K":663.0,"Zn":1.59,"Cu":0.27,"Mn":0.66,"Se":121.65,"iodine":18.1,"Cr":4.1,"Mo":29.5,"o3":300.0},"items":[{"name":"Tuna, canned in water","amount":100,"unit":"g","state":""},{"name":"Pasta","amount":160,"unit":"g","state":"cooked"},{"name":"Tomatoes","amount":100,"unit":"g","state":""},{"name":"Red pepper","amount":50,"unit":"g","state":""},{"name":"Olive oil","amount":10,"unit":"g","state":""}]},{"id":"l3","code":"L3","name":"Prawn rice bowl","kcal":528,"protein":51.4,"fat":11,"carb":59,"fibre":8,"oily":false,"veg":false,"ingredients":["180 g prawns","180 g brown rice","120 g broccoli","50 g red pepper","9 ml olive oil"],"nutrients":{"vitA":187.1,"vitC":142.0,"vitD":0.18,"vitE":5.77,"vitK":178.12,"B1":0.33,"B2":0.28,"B3":8.36,"B5":1.89,"B6":0.93,"biotin":5.3,"folate":177.8,"B12":3.06,"choline":274.2,"Ca":195.5,"Fe":2.9,"Mg":171.6,"P":705.4,"K":1078.18,"Zn":4.62,"Cu":0.61,"Mn":2.37,"Se":91.97,"iodine":76.7,"Cr":20.9,"Mo":42.9,"o3":540.0},"items":[{"name":"Prawns","amount":180,"unit":"g","state":"cooked"},{"name":"Brown rice","amount":180,"unit":"g","state":"cooked"},{"name":"Broccoli, cooked","amount":120,"unit":"g","state":""},{"name":"Red pepper","amount":50,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"l4","code":"L4","name":"Lentil & brown-rice bowl","kcal":547,"protein":25.3,"fat":11,"carb":91,"fibre":21,"oily":false,"veg":true,"ingredients":["180 g lentils","180 g brown rice","120 g spinach","60 g red pepper","9 ml olive oil"],"nutrients":{"vitA":724.8,"vitC":91.5,"vitD":0.0,"vitE":4.75,"vitK":604.74,"B1":0.64,"B2":0.49,"B3":5.88,"B5":1.97,"B6":1.06,"biotin":15.0,"folate":535.8,"B12":0.0,"choline":101.4,"Ca":219.6,"Fe":11.46,"Mg":246.6,"P":586.8,"K":1504.88,"Zn":4.53,"Cu":0.85,"Mn":4.03,"Se":24.9,"iodine":6.6,"Cr":5.4,"Mo":175.8,"o3":0.0},"items":[{"name":"Lentils","amount":180,"unit":"g","state":"cooked"},{"name":"Brown rice","amount":180,"unit":"g","state":"cooked"},{"name":"Spinach, cooked","amount":120,"unit":"g","state":""},{"name":"Red pepper","amount":60,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"l5","code":"L5","name":"Cottage cheese & egg salad box","kcal":481,"protein":37.8,"fat":22,"carb":33,"fibre":8,"oily":false,"veg":true,"ingredients":["150 g cottage cheese","2 large eggs","40 g wholegrain bread","60 g rocket/salad greens","100 g tomatoes","50 g avocado"],"nutrients":{"vitA":332.4,"vitC":28.0,"vitD":2.0,"vitE":3.11,"vitK":86.2,"B1":0.34,"B2":0.92,"B3":3.5,"B5":3.57,"B6":0.58,"biotin":27.8,"folate":195.5,"B12":1.54,"choline":352.0,"Ca":335.3,"Fe":4.3,"Mg":108.1,"P":602.5,"K":1094.9,"Zn":3.38,"Cu":0.42,"Mn":1.2,"Se":55.33,"iodine":89.7,"Cr":5.0,"Mo":38.0,"o3":40.0},"items":[{"name":"Cottage cheese (low-fat)","amount":150,"unit":"g","state":""},{"name":"Whole egg (large, ~50g)","amount":100,"unit":"g","state":""},{"name":"Wholegrain bread","amount":40,"unit":"g","state":""},{"name":"Rocket/salad greens","amount":60,"unit":"g","state":""},{"name":"Tomatoes","amount":100,"unit":"g","state":""},{"name":"Avocado","amount":50,"unit":"g","state":""}]},{"id":"l6","code":"L6","name":"Smoked salmon bagel-style","kcal":366,"protein":33.2,"fat":8,"carb":39,"fibre":6,"oily":true,"veg":false,"ingredients":["80 g smoked salmon","80 g wholegrain bread","60 g cottage cheese","40 g rocket/salad greens","80 g tomatoes"],"nutrients":{"vitA":115.4,"vitC":17.2,"vitD":13.6,"vitE":2.13,"vitK":54.08,"B1":0.47,"B2":0.39,"B3":7.88,"B5":1.67,"B6":0.44,"biotin":8.0,"folate":99.6,"B12":2.66,"choline":102.4,"Ca":216.2,"Fe":3.5,"Mg":107.6,"P":436.2,"K":739.6,"Zn":2.24,"Cu":0.34,"Mn":1.83,"Se":51.42,"iodine":55.6,"Cr":3.4,"Mo":32.8,"o3":1200.0},"items":[{"name":"Smoked salmon","amount":80,"unit":"g","state":""},{"name":"Wholegrain bread","amount":80,"unit":"g","state":""},{"name":"Cottage cheese (low-fat)","amount":60,"unit":"g","state":""},{"name":"Rocket/salad greens","amount":40,"unit":"g","state":""},{"name":"Tomatoes","amount":80,"unit":"g","state":""}]}],"dinner":[{"id":"d1","code":"D1","name":"Salmon, sweet potato & broccoli","kcal":682,"protein":53.6,"fat":27,"carb":63,"fibre":13,"oily":true,"veg":false,"ingredients":["180 g salmon fillet","250 g sweet potato","150 g broccoli","5 ml olive oil"],"nutrients":{"vitA":2542.5,"vitC":147.5,"vitD":19.8,"vitE":6.68,"vitK":220.43,"B1":0.7,"B2":1.15,"B3":19.88,"B5":5.78,"B6":2.11,"biotin":18.0,"folate":223.8,"B12":5.76,"choline":254.5,"Ca":176.6,"Fe":3.73,"Mg":151.2,"P":667.5,"K":2311.05,"Zn":2.15,"Cu":0.57,"Mn":1.57,"Se":67.7,"iodine":73.0,"Cr":25.3,"Mo":11.3,"o3":3960.0},"items":[{"name":"Salmon","amount":180,"unit":"g","state":"cooked"},{"name":"Sweet potato, baked","amount":250,"unit":"g","state":""},{"name":"Broccoli, cooked","amount":150,"unit":"g","state":""},{"name":"Olive oil","amount":5,"unit":"g","state":""}]},{"id":"d2","code":"D2","name":"Mackerel, quinoa & greens","kcal":643,"protein":40.8,"fat":31,"carb":51,"fibre":11,"oily":true,"veg":false,"ingredients":["120 g mackerel","180 g quinoa","150 g broccoli","50 g red pepper","5 ml olive oil"],"nutrients":{"vitA":254.0,"vitC":161.5,"vitD":19.2,"vitE":6.63,"vitK":223.0,"B1":0.44,"B2":1.0,"B3":12.84,"B5":2.63,"B6":1.14,"biotin":11.6,"folate":261.8,"B12":22.8,"choline":200.4,"Ca":112.1,"Fe":5.91,"Mg":193.5,"P":723.1,"K":1335.85,"Zn":3.86,"Cu":0.55,"Mn":1.44,"Se":64.25,"iodine":39.8,"Cr":24.5,"Mo":44.4,"o3":3120.0},"items":[{"name":"Mackerel","amount":120,"unit":"g","state":"cooked"},{"name":"Quinoa","amount":180,"unit":"g","state":"cooked"},{"name":"Broccoli, cooked","amount":150,"unit":"g","state":""},{"name":"Red pepper","amount":50,"unit":"g","state":""},{"name":"Olive oil","amount":5,"unit":"g","state":""}]},{"id":"d3","code":"D3","name":"Tofu & broccoli stir-fry with rice","kcal":656,"protein":43.2,"fat":28,"carb":67,"fibre":13,"oily":false,"veg":true,"ingredients":["200 g firm tofu","150 g broccoli","75 g red pepper","180 g brown rice","9 ml olive oil"],"nutrients":{"vitA":233.25,"vitC":193.7,"vitD":0.0,"vitE":4.66,"vitK":225.93,"B1":0.63,"B2":0.47,"B3":5.08,"B5":1.84,"B6":0.99,"biotin":8.05,"folate":261.7,"B12":0.0,"choline":136.7,"Ca":783.25,"Fe":7.72,"Mg":230.7,"P":680.0,"K":1112.63,"Zn":5.14,"Cu":1.07,"Mn":4.75,"Se":54.48,"iodine":12.05,"Cr":25.55,"Mo":222.75,"o3":0.0},"items":[{"name":"Firm tofu (calcium-set)","amount":200,"unit":"g","state":""},{"name":"Broccoli, cooked","amount":150,"unit":"g","state":""},{"name":"Red pepper","amount":75,"unit":"g","state":""},{"name":"Brown rice","amount":180,"unit":"g","state":"cooked"},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"d4","code":"D4","name":"Cod, potato & peas","kcal":614,"protein":58.7,"fat":11,"carb":70,"fibre":12,"oily":false,"veg":false,"ingredients":["200 g cod fillet","250 g potato","120 g peas","9 ml olive oil"],"nutrients":{"vitA":72.1,"vitC":51.3,"vitD":2.4,"vitE":2.58,"vitK":38.8,"B1":0.65,"B2":0.37,"B3":10.9,"B5":1.79,"B6":1.84,"biotin":9.7,"folate":168.0,"B12":2.0,"choline":228.6,"Ca":105.9,"Fe":5.39,"Mg":188.8,"P":795.4,"K":2542.78,"Zn":3.31,"Cu":0.58,"Mn":0.9,"Se":76.91,"iodine":223.7,"Cr":5.7,"Mo":32.5,"o3":400.0},"items":[{"name":"Cod","amount":200,"unit":"g","state":"cooked"},{"name":"Potato, baked","amount":250,"unit":"g","state":""},{"name":"Peas, cooked","amount":120,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"d5","code":"D5","name":"Egg & veg shakshuka","kcal":595,"protein":37.4,"fat":35,"carb":35,"fibre":9,"oily":false,"veg":true,"ingredients":["3 large eggs","200 g tomatoes","100 g red pepper","100 g spinach","40 g wholegrain bread","30 g cheddar cheese","9 ml olive oil"],"nutrients":{"vitA":1084.5,"vitC":166.0,"vitD":3.18,"vitE":7.79,"vitK":522.97,"B1":0.46,"B2":1.26,"B3":4.43,"B5":3.26,"B6":1.05,"biotin":37.8,"folate":317.4,"B12":1.67,"choline":494.1,"Ca":506.1,"Fe":8.44,"Mg":177.8,"P":665.4,"K":1487.48,"Zn":4.97,"Cu":0.53,"Mn":2.08,"Se":61.85,"iodine":76.0,"Cr":6.2,"Mo":46.0,"o3":60.0},"items":[{"name":"Whole egg (large, ~50g)","amount":150,"unit":"g","state":""},{"name":"Tomatoes","amount":200,"unit":"g","state":""},{"name":"Red pepper","amount":100,"unit":"g","state":""},{"name":"Spinach, cooked","amount":100,"unit":"g","state":""},{"name":"Wholegrain bread","amount":40,"unit":"g","state":""},{"name":"Cheddar cheese","amount":30,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"d6","code":"D6","name":"Tempeh, sweet potato & greens","kcal":582,"protein":38.1,"fat":25,"carb":62,"fibre":11,"oily":false,"veg":true,"ingredients":["150 g tempeh","200 g sweet potato","120 g spinach","50 g red pepper","9 ml olive oil"],"nutrients":{"vitA":2627.3,"vitC":116.0,"vitD":0.0,"vitE":5.87,"vitK":604.7,"B1":0.47,"B2":1.07,"B3":8.0,"B5":2.3,"B6":1.34,"biotin":11.6,"folate":246.2,"B12":0.15,"choline":98.0,"Ca":409.2,"Fe":10.03,"Mg":285.9,"P":587.2,"K":2232.78,"Zn":3.33,"Cu":1.37,"Mn":4.08,"Se":2.25,"iodine":6.4,"Cr":5.2,"Mo":152.5,"o3":0.0},"items":[{"name":"Tempeh","amount":150,"unit":"g","state":""},{"name":"Sweet potato, baked","amount":200,"unit":"g","state":""},{"name":"Spinach, cooked","amount":120,"unit":"g","state":""},{"name":"Red pepper","amount":50,"unit":"g","state":""},{"name":"Olive oil","amount":8,"unit":"g","state":""}]},{"id":"d7","code":"D7","name":"Edamame & tofu rice bowl","kcal":662,"protein":44.6,"fat":25,"carb":72,"fibre":17,"oily":false,"veg":true,"ingredients":["150 g edamame","120 g firm tofu","180 g brown rice","120 g broccoli","5 ml olive oil"],"nutrients":{"vitA":92.4,"vitC":87.12,"vitD":0.0,"vitE":3.63,"vitK":216.66,"B1":0.74,"B2":0.52,"B3":5.19,"B5":1.94,"B6":0.78,"biotin":8.4,"folate":638.1,"B12":0.0,"choline":180.3,"Ca":580.5,"Fe":8.46,"Mg":258.9,"P":741.9,"K":1376.45,"Zn":5.49,"Cu":1.23,"Mn":5.15,"Se":41.82,"iodine":10.5,"Cr":21.3,"Mo":222.6,"o3":0.0},"items":[{"name":"Edamame, cooked","amount":150,"unit":"g","state":""},{"name":"Firm tofu (calcium-set)","amount":120,"unit":"g","state":""},{"name":"Brown rice","amount":180,"unit":"g","state":"cooked"},{"name":"Broccoli, cooked","amount":120,"unit":"g","state":""},{"name":"Olive oil","amount":5,"unit":"g","state":""}]}]},"boosters":[{"id":"sardine","name":"Tin of sardines (100 g)","kcal":208,"protein":25.0,"fat":11.0,"carb":0.0,"boosts":["Omega-3","B12","Selen.","Phosph.","Calcium"],"boostKeys":["o3","B12","Se","P","Ca","B3","vitD","Cu","B2","iodine","choline","biotin","Zn","Fe","K"],"nutrients":{"vitA":32.0,"vitC":0.0,"vitD":4.8,"vitE":2.0,"vitK":2.6,"B1":0.04,"B2":0.23,"B3":5.2,"B5":0.64,"B6":0.17,"biotin":5.0,"folate":10.0,"B12":8.9,"choline":75.0,"Ca":382.0,"Fe":2.9,"Mg":39.0,"P":490.0,"K":397.0,"Zn":1.3,"Cu":0.19,"Mn":0.11,"Se":52.0,"iodine":30.0,"Cr":1.0,"Mo":2.0,"o3":1400.0}},{"id":"mackerel","name":"Tin of mackerel (100 g)","kcal":262,"protein":24.0,"fat":18.0,"carb":0.0,"boosts":["Omega-3","B12","Vit D","Selen.","B3"],"boostKeys":["o3","B12","vitD","Se","B3","B2","P","B6","choline","B5","biotin","iodine","K"],"nutrients":{"vitA":50.0,"vitC":0.0,"vitD":16.0,"vitE":1.5,"vitK":5.0,"B1":0.12,"B2":0.5,"B3":9.0,"B5":0.86,"B6":0.4,"biotin":5.0,"folate":1.0,"B12":19.0,"choline":80.0,"Ca":15.0,"Fe":1.6,"Mg":34.0,"P":280.0,"K":401.0,"Zn":0.9,"Cu":0.1,"Mn":0.02,"Se":44.0,"iodine":25.0,"Cr":1.0,"Mo":2.0,"o3":2600.0}},{"id":"gyogurt","name":"Greek yogurt (170 g)","kcal":100,"protein":17.0,"fat":0.7,"carb":6.1,"boosts":["B12","B2","Iodine","Phosph.","Molybd."],"boostKeys":["B12","B2","iodine","P","Mo","Se","Ca"],"nutrients":{"vitA":1.7,"vitC":0.0,"vitD":0.0,"vitE":0.02,"vitK":0.0,"B1":0.03,"B2":0.48,"B3":0.34,"B5":0.56,"B6":0.1,"biotin":3.4,"folate":11.9,"B12":1.27,"choline":25.5,"Ca":187.0,"Fe":0.12,"Mg":18.7,"P":229.5,"K":239.7,"Zn":0.85,"Cu":0.02,"Mn":0.02,"Se":16.49,"iodine":51.0,"Cr":1.7,"Mo":13.6,"o3":0.0}},{"id":"cottage","name":"Cottage cheese (150 g)","kcal":126,"protein":16.5,"fat":3.4,"carb":5.1,"boosts":["Phosph.","Iodine","B12","Selen.","B2"],"boostKeys":["P","iodine","B12","Se","B2","Mo","B5"],"nutrients":{"vitA":55.5,"vitC":0.0,"vitD":0.0,"vitE":0.01,"vitK":0.0,"B1":0.04,"B2":0.24,"B3":0.2,"B5":0.75,"B6":0.08,"biotin":3.0,"folate":18.0,"B12":0.65,"choline":27.0,"Ca":124.5,"Fe":0.11,"Mg":12.0,"P":238.5,"K":156.0,"Zn":0.6,"Cu":0.04,"Mn":0.0,"Se":14.25,"iodine":45.0,"Cr":1.5,"Mo":9.0,"o3":0.0}},{"id":"cheddar","name":"Cheese (30 g)","kcal":121,"protein":7.5,"fat":9.9,"carb":0.4,"boosts":["Phosph.","Calcium"],"boostKeys":["P","Ca"],"nutrients":{"vitA":79.5,"vitC":0.0,"vitD":0.18,"vitE":0.21,"vitK":0.72,"B1":0.01,"B2":0.12,"B3":0.02,"B5":0.12,"B6":0.02,"biotin":0.6,"folate":8.1,"B12":0.33,"choline":5.1,"Ca":216.3,"Fe":0.2,"Mg":8.4,"P":153.6,"K":29.4,"Zn":0.93,"Cu":0.01,"Mn":0.01,"Se":4.2,"iodine":9.0,"Cr":0.3,"Mo":1.5,"o3":0.0}},{"id":"egg","name":"1 boiled egg","kcal":72,"protein":6.3,"fat":4.8,"carb":0.3,"boosts":["Choline","B7","Selen.","B2","B12"],"boostKeys":["choline","biotin","Se","B2","B12","B5"],"nutrients":{"vitA":80.0,"vitC":0.0,"vitD":1.0,"vitE":0.53,"vitK":0.15,"B1":0.02,"B2":0.23,"B3":0.04,"B5":0.77,"B6":0.09,"biotin":10.0,"folate":23.5,"B12":0.45,"choline":147.0,"Ca":28.0,"Fe":0.88,"Mg":6.0,"P":99.0,"K":69.0,"Zn":0.65,"Cu":0.04,"Mn":0.01,"Se":15.35,"iodine":20.0,"Cr":0.5,"Mo":4.5,"o3":20.0}},{"id":"pumpkinseed","name":"Pumpkin seeds (20 g)","kcal":112,"protein":6.0,"fat":9.8,"carb":2.2,"boosts":["Mangan.","Magnes.","Phosph.","Copper","Zinc"],"boostKeys":["Mn","Mg","P","Cu","Zn"],"nutrients":{"vitA":0.2,"vitC":0.38,"vitD":0.0,"vitE":0.44,"vitK":1.46,"B1":0.05,"B2":0.03,"B3":0.98,"B5":0.07,"B6":0.03,"biotin":1.0,"folate":11.6,"B12":0.0,"choline":12.6,"Ca":9.2,"Fe":1.76,"Mg":118.4,"P":246.6,"K":161.8,"Zn":1.56,"Cu":0.26,"Mn":0.9,"Se":1.88,"iodine":0.2,"Cr":0.2,"Mo":4.0,"o3":0.0}},{"id":"sunflowerseed","name":"Sunflower seeds (25 g)","kcal":146,"protein":5.2,"fat":12.8,"carb":5.0,"boosts":["Vit E","Copper","B1","Mangan.","Magnes."],"boostKeys":["vitE","Cu","B1","Mn","Mg","B6","Se","P","Mo","Zn"],"nutrients":{"vitA":0.75,"vitC":0.35,"vitD":0.0,"vitE":8.75,"vitK":0.0,"B1":0.38,"B2":0.09,"B3":2.08,"B5":0.28,"B6":0.33,"biotin":1.25,"folate":56.75,"B12":0.0,"choline":13.75,"Ca":19.5,"Fe":1.3,"Mg":81.25,"P":165.0,"K":161.25,"Zn":1.25,"Cu":0.45,"Mn":0.5,"Se":13.25,"iodine":0.25,"Cr":0.25,"Mo":7.5,"o3":0.0}},{"id":"almond","name":"Almonds (~20)","kcal":145,"protein":5.2,"fat":12.5,"carb":5.5,"boosts":["Vit E","Mangan.","Copper","B2","Magnes."],"boostKeys":["vitE","Mn","Cu","B2","Mg","P"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":6.4,"vitK":0.0,"B1":0.05,"B2":0.28,"B3":0.9,"B5":0.12,"B6":0.04,"biotin":1.25,"folate":11.0,"B12":0.0,"choline":13.0,"Ca":67.25,"Fe":0.93,"Mg":67.5,"P":120.25,"K":183.25,"Zn":0.78,"Cu":0.25,"Mn":0.55,"Se":1.0,"iodine":0.25,"Cr":0.25,"Mo":2.5,"o3":0.0}},{"id":"brazilg","name":"1 Brazil nut","kcal":26,"protein":0.6,"fat":2.7,"carb":0.5,"boosts":["Selen."],"boostKeys":["Se"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.23,"vitK":0.0,"B1":0.02,"B2":0.0,"B3":0.01,"B5":0.01,"B6":0.0,"biotin":0.12,"folate":0.88,"B12":0.0,"choline":1.12,"Ca":6.4,"Fe":0.1,"Mg":15.04,"P":29.0,"K":26.36,"Zn":0.16,"Cu":0.07,"Mn":0.05,"Se":76.68,"iodine":0.04,"Cr":0.04,"Mo":0.8,"o3":0.0}},{"id":"darkchoc","name":"Dark chocolate 85% (20 g)","kcal":120,"protein":1.6,"fat":8.6,"carb":9.2,"boosts":["Copper","Mangan."],"boostKeys":["Cu","Mn"],"nutrients":{"vitA":0.4,"vitC":0.0,"vitD":0.0,"vitE":0.12,"vitK":1.4,"B1":0.01,"B2":0.02,"B3":0.22,"B5":0.08,"B6":0.01,"biotin":0.0,"folate":0.6,"B12":0.0,"choline":2.4,"Ca":14.6,"Fe":2.4,"Mg":45.6,"P":61.6,"K":143.0,"Zn":0.66,"Cu":0.36,"Mn":0.38,"Se":1.36,"iodine":0.0,"Cr":0.2,"Mo":1.0,"o3":0.0}},{"id":"edamame","name":"Edamame (100 g)","kcal":121,"protein":11.0,"fat":5.0,"carb":9.0,"boosts":["Molybd.","Folate","Mangan.","Copper","Vit K"],"boostKeys":["Mo","folate","Mn","Cu","vitK","P","Mg","B1","K","Zn"],"nutrients":{"vitA":0.0,"vitC":6.0,"vitD":0.0,"vitE":0.7,"vitK":27.0,"B1":0.2,"B2":0.16,"B3":0.9,"B5":0.4,"B6":0.1,"biotin":2.0,"folate":311.0,"B12":0.0,"choline":55.0,"Ca":63.0,"Fe":2.3,"Mg":61.0,"P":169.0,"K":436.0,"Zn":1.3,"Cu":0.34,"Mn":1.0,"Se":1.0,"iodine":1.0,"Cr":1.0,"Mo":50.0,"o3":0.0}},{"id":"avocado","name":"\u00bd avocado","kcal":120,"protein":1.5,"fat":11.2,"carb":6.8,"boosts":["B5","Vit K","Copper","Folate","B6"],"boostKeys":["B5","vitK","Cu","folate","B6"],"nutrients":{"vitA":5.25,"vitC":7.5,"vitD":0.0,"vitE":1.58,"vitK":15.75,"B1":0.05,"B2":0.1,"B3":1.27,"B5":1.05,"B6":0.2,"biotin":3.0,"folate":60.75,"B12":0.0,"choline":10.5,"Ca":9.0,"Fe":0.41,"Mg":21.75,"P":39.0,"K":363.75,"Zn":0.48,"Cu":0.14,"Mn":0.11,"Se":0.3,"iodine":0.75,"Cr":0.75,"Mo":3.0,"o3":0.0}},{"id":"orange","name":"1 orange","kcal":61,"protein":1.2,"fat":0.1,"carb":15.6,"boosts":["Vit C"],"boostKeys":["vitC"],"nutrients":{"vitA":14.3,"vitC":68.9,"vitD":0.0,"vitE":0.23,"vitK":0.0,"B1":0.12,"B2":0.05,"B3":0.36,"B5":0.33,"B6":0.08,"biotin":1.3,"folate":39.0,"B12":0.0,"choline":10.4,"Ca":52.0,"Fe":0.13,"Mg":13.0,"P":18.2,"K":235.3,"Zn":0.09,"Cu":0.05,"Mn":0.04,"Se":0.65,"iodine":1.3,"Cr":1.3,"Mo":6.5,"o3":0.0}},{"id":"kiwi","name":"1 kiwi","kcal":46,"protein":0.8,"fat":0.4,"carb":11.2,"boosts":["Vit C","Vit K"],"boostKeys":["vitC","vitK"],"nutrients":{"vitA":3.0,"vitC":69.75,"vitD":0.0,"vitE":1.12,"vitK":30.0,"B1":0.02,"B2":0.02,"B3":0.26,"B5":0.14,"B6":0.04,"biotin":0.75,"folate":18.75,"B12":0.0,"choline":6.0,"Ca":25.5,"Fe":0.23,"Mg":12.75,"P":25.5,"K":234.0,"Zn":0.11,"Cu":0.1,"Mn":0.08,"Se":0.15,"iodine":0.75,"Cr":0.75,"Mo":3.75,"o3":0.0}},{"id":"banana","name":"1 banana","kcal":107,"protein":1.3,"fat":0.4,"carb":27.6,"boosts":["B6","Molybd.","Mangan.","Potass."],"boostKeys":["B6","Mo","Mn","K"],"nutrients":{"vitA":3.6,"vitC":10.44,"vitD":0.0,"vitE":0.12,"vitK":0.6,"B1":0.04,"B2":0.08,"B3":0.79,"B5":0.4,"B6":0.44,"biotin":1.2,"folate":24.0,"B12":0.0,"choline":12.0,"Ca":6.0,"Fe":0.31,"Mg":32.4,"P":26.4,"K":429.6,"Zn":0.18,"Cu":0.1,"Mn":0.32,"Se":1.2,"iodine":1.2,"Cr":1.2,"Mo":12.0,"o3":0.0}},{"id":"carrot","name":"1 carrot","kcal":33,"protein":0.7,"fat":0.2,"carb":8.0,"boosts":["Vit A"],"boostKeys":["vitA"],"nutrients":{"vitA":668.0,"vitC":4.72,"vitD":0.0,"vitE":0.53,"vitK":10.56,"B1":0.06,"B2":0.05,"B3":0.8,"B5":0.22,"B6":0.11,"biotin":0.0,"folate":15.2,"B12":0.0,"choline":7.04,"Ca":26.4,"Fe":0.24,"Mg":9.6,"P":28.0,"K":256.0,"Zn":0.19,"Cu":0.04,"Mn":0.11,"Se":0.08,"iodine":0.0,"Cr":0.8,"Mo":0.8,"o3":0.0}},{"id":"iodsaltg","name":"\u00bc tsp iodised salt","kcal":0,"protein":0.0,"fat":0.0,"carb":0.0,"boosts":["Iodine"],"boostKeys":["iodine"],"nutrients":{"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.0,"vitK":0.0,"B1":0.0,"B2":0.0,"B3":0.0,"B5":0.0,"B6":0.0,"biotin":0.0,"folate":0.0,"B12":0.0,"choline":0.0,"Ca":0.0,"Fe":0.0,"Mg":0.0,"P":0.0,"K":0.0,"Zn":0.0,"Cu":0.0,"Mn":0.0,"Se":0.0,"iodine":36.0,"Cr":0.0,"Mo":0.0,"o3":0.0}},{"id":"lentils","name":"Lentils (150 g)","kcal":174,"protein":13.5,"fat":0.6,"carb":30.0,"boosts":["Molybd.","Folate","Copper","Mangan.","Phosph."],"boostKeys":["Mo","folate","Cu","Mn","P","Fe","biotin","Zn","B1","K","B6","B5","Mg"],"nutrients":{"vitA":1.5,"vitC":2.25,"vitD":0.0,"vitE":0.17,"vitK":2.55,"B1":0.26,"B2":0.11,"B3":1.65,"B5":0.96,"B6":0.27,"biotin":7.5,"folate":271.5,"B12":0.0,"choline":48.0,"Ca":28.5,"Fe":4.95,"Mg":54.0,"P":270.0,"K":553.5,"Zn":1.95,"Cu":0.38,"Mn":0.75,"Se":4.2,"iodine":1.5,"Cr":1.5,"Mo":105.0,"o3":0.0}},{"id":"tofuca","name":"Firm tofu (150 g)","kcal":216,"protein":25.5,"fat":13.0,"carb":4.2,"boosts":["Molybd.","Mangan.","Copper","Calcium","Selen."],"boostKeys":["Mo","Mn","Cu","Ca","Se","P","Zn","Mg","Fe","B1"],"nutrients":{"vitA":0.0,"vitC":0.15,"vitD":0.0,"vitE":0.01,"vitK":3.6,"B1":0.24,"B2":0.15,"B3":0.6,"B5":0.15,"B6":0.15,"biotin":3.0,"folate":43.5,"B12":0.0,"choline":42.0,"Ca":525.0,"Fe":4.05,"Mg":90.0,"P":285.0,"K":270.0,"Zn":2.4,"Cu":0.6,"Mn":1.8,"Se":25.5,"iodine":1.5,"Cr":1.5,"Mo":135.0,"o3":0.0}}],"ingredients":[{"key":"almond","label":"Almonds","units":[["almond",1.2],["g",1]],"per100":{"kcal":579,"prot":21,"fat":50,"carb":22,"fib":12.5,"vitA":0,"vitC":0,"vitD":0,"vitE":25.6,"vitK":0,"B1":0.2,"B2":1.1,"B3":3.6,"B5":0.47,"B6":0.14,"biotin":5,"folate":44,"B12":0,"choline":52,"Ca":269,"Fe":3.7,"Mg":270,"P":481,"K":733,"Zn":3.1,"Cu":1.0,"Mn":2.2,"Se":4,"iodine":1,"Cr":1,"Mo":10,"o3":0}},{"key":"apple","label":"Apple","units":[["apple",182],["g",1]],"per100":{"kcal":52,"prot":0.3,"fat":0.2,"carb":14,"fib":2.4,"vitA":3,"vitC":4.6,"vitD":0,"vitE":0.18,"vitK":2.2,"B1":0.02,"B2":0.03,"B3":0.09,"B5":0.06,"B6":0.04,"biotin":1,"folate":3,"B12":0,"choline":3.4,"Ca":6,"Fe":0.12,"Mg":5,"P":11,"K":107,"Zn":0.04,"Cu":0.03,"Mn":0.04,"Se":0,"iodine":0,"Cr":1,"Mo":1,"o3":0}},{"key":"avocado","label":"Avocado","units":[["g",1]],"per100":{"kcal":160,"prot":2,"fat":15,"carb":9,"fib":7,"vitA":7,"vitC":10,"vitD":0,"vitE":2.1,"vitK":21,"B1":0.07,"B2":0.13,"B3":1.7,"B5":1.4,"B6":0.26,"biotin":4,"folate":81,"B12":0,"choline":14,"Ca":12,"Fe":0.55,"Mg":29,"P":52,"K":485,"Zn":0.64,"Cu":0.19,"Mn":0.14,"Se":0.4,"iodine":1,"Cr":1,"Mo":4,"o3":0}},{"key":"banana","label":"Banana","units":[["banana",120],["g",1]],"per100":{"kcal":89,"prot":1.1,"fat":0.3,"carb":23,"fib":2.6,"vitA":3,"vitC":8.7,"vitD":0,"vitE":0.1,"vitK":0.5,"B1":0.03,"B2":0.07,"B3":0.66,"B5":0.33,"B6":0.37,"biotin":1,"folate":20,"B12":0,"choline":10,"Ca":5,"Fe":0.26,"Mg":27,"P":22,"K":358,"Zn":0.15,"Cu":0.08,"Mn":0.27,"Se":1,"iodine":1,"Cr":1,"Mo":10,"o3":0}},{"key":"blackbean_c","label":"Black beans","units":[["g",1]],"per100":{"kcal":132,"prot":8.9,"fat":0.5,"carb":23.7,"fib":8.7,"vitA":0,"vitC":0,"vitD":0,"vitE":0.87,"vitK":3.3,"B1":0.24,"B2":0.06,"B3":0.51,"B5":0.28,"B6":0.07,"biotin":1,"folate":149,"B12":0,"choline":66,"Ca":27,"Fe":2.1,"Mg":70,"P":140,"K":355,"Zn":1.1,"Cu":0.21,"Mn":0.44,"Se":1.2,"iodine":0,"Cr":1,"Mo":40,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":132,"prot":8.9,"fat":0.5,"carb":23.7,"fib":8.7,"vitA":0,"vitC":0,"vitD":0,"vitE":0.87,"vitK":3.3,"B1":0.24,"B2":0.06,"B3":0.51,"B5":0.28,"B6":0.07,"biotin":1,"folate":149,"B12":0,"choline":66,"Ca":27,"Fe":2.1,"Mg":70,"P":140,"K":355,"Zn":1.1,"Cu":0.21,"Mn":0.44,"Se":1.2,"iodine":0,"Cr":1,"Mo":40,"o3":0},"raw":{"kcal":341,"prot":21.6,"fat":1.4,"carb":62,"fib":15.5,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":2.248,"vitK":8.525,"B1":0.62,"B2":0.155,"B3":1.318,"B5":0.723,"B6":0.181,"biotin":2.583,"folate":384.917,"B12":0.0,"choline":170.5,"Ca":69.75,"Fe":5.425,"Mg":180.833,"P":361.667,"K":917.083,"Zn":2.842,"Cu":0.542,"Mn":1.137,"Se":3.1,"iodine":0.0,"Cr":2.583,"Mo":103.333,"o3":0.0}}},{"key":"blueberry","label":"Blueberries","units":[["g",1]],"per100":{"kcal":57,"prot":0.7,"fat":0.3,"carb":14,"fib":2.4,"vitA":3,"vitC":9.7,"vitD":0,"vitE":0.57,"vitK":19,"B1":0.04,"B2":0.04,"B3":0.4,"B5":0.12,"B6":0.05,"biotin":1,"folate":6,"B12":0,"choline":6,"Ca":6,"Fe":0.28,"Mg":6,"P":12,"K":77,"Zn":0.16,"Cu":0.06,"Mn":0.34,"Se":0.1,"iodine":1,"Cr":1,"Mo":5,"o3":0}},{"key":"brazil_g","label":"Brazil nut","units":[["nut",4],["g",1]],"per100":{"kcal":659,"prot":14,"fat":67,"carb":12,"fib":7.5,"vitA":0,"vitC":0,"vitD":0,"vitE":5.7,"vitK":0,"B1":0.6,"B2":0.03,"B3":0.3,"B5":0.18,"B6":0.1,"biotin":3,"folate":22,"B12":0,"choline":28,"Ca":160,"Fe":2.4,"Mg":376,"P":725,"K":659,"Zn":4.1,"Cu":1.7,"Mn":1.2,"Se":1917,"iodine":1,"Cr":1,"Mo":20,"o3":0}},{"key":"broccoli","label":"Broccoli, cooked","units":[["g",1]],"per100":{"kcal":35,"prot":2.4,"fat":0.4,"carb":7,"fib":3.3,"vitA":77,"vitC":65,"vitD":0,"vitE":1.5,"vitK":141,"B1":0.06,"B2":0.12,"B3":0.55,"B5":0.6,"B6":0.2,"biotin":1,"folate":108,"B12":0,"choline":40,"Ca":40,"Fe":0.7,"Mg":21,"P":67,"K":293,"Zn":0.45,"Cu":0.05,"Mn":0.19,"Se":1.6,"iodine":5,"Cr":14,"Mo":3,"o3":0}},{"key":"brownrice","label":"Brown rice","units":[["g",1]],"per100":{"kcal":123,"prot":2.7,"fat":0.9,"carb":26,"fib":1.6,"vitA":0,"vitC":0,"vitD":0,"vitE":0.04,"vitK":0.6,"B1":0.1,"B2":0.01,"B3":1.5,"B5":0.28,"B6":0.15,"biotin":1,"folate":4,"B12":0,"choline":9,"Ca":10,"Fe":0.5,"Mg":39,"P":100,"K":86,"Zn":0.6,"Cu":0.1,"Mn":1.1,"Se":10,"iodine":1,"Cr":1,"Mo":20,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":123,"prot":2.7,"fat":0.9,"carb":26,"fib":1.6,"vitA":0,"vitC":0,"vitD":0,"vitE":0.04,"vitK":0.6,"B1":0.1,"B2":0.01,"B3":1.5,"B5":0.28,"B6":0.15,"biotin":1,"folate":4,"B12":0,"choline":9,"Ca":10,"Fe":0.5,"Mg":39,"P":100,"K":86,"Zn":0.6,"Cu":0.1,"Mn":1.1,"Se":10,"iodine":1,"Cr":1,"Mo":20,"o3":0},"raw":{"kcal":370,"prot":7.9,"fat":2.9,"carb":76,"fib":3.5,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.12,"vitK":1.805,"B1":0.301,"B2":0.03,"B3":4.512,"B5":0.842,"B6":0.451,"biotin":3.008,"folate":12.033,"B12":0.0,"choline":27.073,"Ca":30.081,"Fe":1.504,"Mg":117.317,"P":300.813,"K":258.699,"Zn":1.805,"Cu":0.301,"Mn":3.309,"Se":30.081,"iodine":3.008,"Cr":3.008,"Mo":60.163,"o3":0.0}}},{"key":"carrot","label":"Carrot","units":[["g",1]],"per100":{"kcal":41,"prot":0.9,"fat":0.2,"carb":10,"fib":2.8,"vitA":835,"vitC":5.9,"vitD":0,"vitE":0.66,"vitK":13.2,"B1":0.07,"B2":0.06,"B3":1.0,"B5":0.27,"B6":0.14,"biotin":0,"folate":19,"B12":0,"choline":8.8,"Ca":33,"Fe":0.3,"Mg":12,"P":35,"K":320,"Zn":0.24,"Cu":0.05,"Mn":0.14,"Se":0.1,"iodine":0,"Cr":1,"Mo":1,"o3":0}},{"key":"cashew","label":"Cashews","units":[["g",1]],"per100":{"kcal":553,"prot":18,"fat":44,"carb":30,"fib":3.3,"vitA":0,"vitC":0.5,"vitD":0,"vitE":0.9,"vitK":34,"B1":0.42,"B2":0.06,"B3":1.1,"B5":0.86,"B6":0.42,"biotin":13,"folate":25,"B12":0,"choline":61,"Ca":37,"Fe":6.7,"Mg":292,"P":593,"K":660,"Zn":5.8,"Cu":2.2,"Mn":0.8,"Se":20,"iodine":0,"Cr":1,"Mo":10,"o3":0}},{"key":"cheddar","label":"Cheddar cheese","units":[["g",1]],"per100":{"kcal":403,"prot":25,"fat":33,"carb":1.3,"fib":0,"vitA":265,"vitC":0,"vitD":0.6,"vitE":0.71,"vitK":2.4,"B1":0.03,"B2":0.4,"B3":0.06,"B5":0.41,"B6":0.07,"biotin":2,"folate":27,"B12":1.1,"choline":17,"Ca":721,"Fe":0.68,"Mg":28,"P":512,"K":98,"Zn":3.1,"Cu":0.03,"Mn":0.03,"Se":14,"iodine":30,"Cr":1,"Mo":5,"o3":0}},{"key":"chia_g","label":"Chia seeds","units":[["g",1]],"per100":{"kcal":486,"prot":17,"fat":31,"carb":42,"fib":34,"vitA":0,"vitC":1,"vitD":0,"vitE":0.5,"vitK":0,"B1":0.6,"B2":0.17,"B3":8.8,"B5":0.94,"B6":0,"biotin":1,"folate":49,"B12":0,"choline":0,"Ca":631,"Fe":7.7,"Mg":335,"P":860,"K":407,"Zn":4.6,"Cu":0.92,"Mn":2.7,"Se":55,"iodine":1,"Cr":1,"Mo":30,"o3":17800}},{"key":"chickpea_c","label":"Chickpeas","units":[["g",1]],"per100":{"kcal":164,"prot":8.9,"fat":2.6,"carb":27.4,"fib":7.6,"vitA":1,"vitC":1.3,"vitD":0,"vitE":0.35,"vitK":4,"B1":0.12,"B2":0.06,"B3":0.53,"B5":0.29,"B6":0.14,"biotin":1,"folate":172,"B12":0,"choline":43,"Ca":49,"Fe":2.9,"Mg":48,"P":168,"K":291,"Zn":1.5,"Cu":0.35,"Mn":1.0,"Se":3.7,"iodine":0,"Cr":1,"Mo":45,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":164,"prot":8.9,"fat":2.6,"carb":27.4,"fib":7.6,"vitA":1,"vitC":1.3,"vitD":0,"vitE":0.35,"vitK":4,"B1":0.12,"B2":0.06,"B3":0.53,"B5":0.29,"B6":0.14,"biotin":1,"folate":172,"B12":0,"choline":43,"Ca":49,"Fe":2.9,"Mg":48,"P":168,"K":291,"Zn":1.5,"Cu":0.35,"Mn":1.0,"Se":3.7,"iodine":0,"Cr":1,"Mo":45,"o3":0},"raw":{"kcal":378,"prot":20.5,"fat":6,"carb":63,"fib":12.2,"vitA":2.305,"vitC":2.996,"vitD":0.0,"vitE":0.807,"vitK":9.22,"B1":0.277,"B2":0.138,"B3":1.222,"B5":0.668,"B6":0.323,"biotin":2.305,"folate":396.439,"B12":0.0,"choline":99.11,"Ca":112.939,"Fe":6.684,"Mg":110.634,"P":387.22,"K":670.72,"Zn":3.457,"Cu":0.807,"Mn":2.305,"Se":8.528,"iodine":0.0,"Cr":2.305,"Mo":103.72,"o3":0.0}}},{"key":"cod","label":"Cod","units":[["g",1]],"per100":{"kcal":105,"prot":23,"fat":0.9,"carb":0,"fib":0,"vitA":12,"vitC":1,"vitD":1.2,"vitE":0.6,"vitK":0.1,"B1":0.08,"B2":0.07,"B3":2.5,"B5":0.15,"B6":0.4,"biotin":3,"folate":10,"B12":1.0,"choline":80,"Ca":18,"Fe":0.4,"Mg":36,"P":240,"K":440,"Zn":0.5,"Cu":0.03,"Mn":0.02,"Se":37,"iodine":110,"Cr":1,"Mo":1,"o3":200},"default":"cooked","forms":{"cooked":{"kcal":105,"prot":23,"fat":0.9,"carb":0,"fib":0,"vitA":12,"vitC":1,"vitD":1.2,"vitE":0.6,"vitK":0.1,"B1":0.08,"B2":0.07,"B3":2.5,"B5":0.15,"B6":0.4,"biotin":3,"folate":10,"B12":1.0,"choline":80,"Ca":18,"Fe":0.4,"Mg":36,"P":240,"K":440,"Zn":0.5,"Cu":0.03,"Mn":0.02,"Se":37,"iodine":110,"Cr":1,"Mo":1,"o3":200},"raw":{"kcal":82,"prot":18,"fat":0.7,"carb":0,"fib":0,"vitA":9.371,"vitC":0.781,"vitD":0.937,"vitE":0.469,"vitK":0.078,"B1":0.062,"B2":0.055,"B3":1.952,"B5":0.117,"B6":0.312,"biotin":2.343,"folate":7.81,"B12":0.781,"choline":62.476,"Ca":14.057,"Fe":0.312,"Mg":28.114,"P":187.429,"K":343.619,"Zn":0.39,"Cu":0.023,"Mn":0.016,"Se":28.895,"iodine":85.905,"Cr":0.781,"Mo":0.781,"o3":156.19}}},{"key":"cottage","label":"Cottage cheese (low-fat)","units":[["g",1]],"per100":{"kcal":84,"prot":11,"fat":2.3,"carb":3.4,"fib":0,"vitA":37,"vitC":0,"vitD":0,"vitE":0.01,"vitK":0,"B1":0.03,"B2":0.16,"B3":0.13,"B5":0.5,"B6":0.05,"biotin":2,"folate":12,"B12":0.43,"choline":18,"Ca":83,"Fe":0.07,"Mg":8,"P":159,"K":104,"Zn":0.4,"Cu":0.03,"Mn":0.003,"Se":9.5,"iodine":30,"Cr":1,"Mo":6,"o3":0}},{"key":"dark_choc","label":"Dark chocolate (85%)","units":[["g",1]],"per100":{"kcal":598,"prot":7.8,"fat":43,"carb":46,"fib":11,"vitA":2,"vitC":0,"vitD":0,"vitE":0.6,"vitK":7,"B1":0.03,"B2":0.08,"B3":1.1,"B5":0.42,"B6":0.04,"biotin":0,"folate":3,"B12":0,"choline":12,"Ca":73,"Fe":12,"Mg":228,"P":308,"K":715,"Zn":3.3,"Cu":1.8,"Mn":1.9,"Se":6.8,"iodine":0,"Cr":1,"Mo":5,"o3":0}},{"key":"edamame","label":"Edamame, cooked","units":[["g",1]],"per100":{"kcal":121,"prot":11,"fat":5,"carb":9,"fib":5,"vitA":0,"vitC":6,"vitD":0,"vitE":0.7,"vitK":27,"B1":0.2,"B2":0.16,"B3":0.9,"B5":0.4,"B6":0.1,"biotin":2,"folate":311,"B12":0,"choline":55,"Ca":63,"Fe":2.3,"Mg":61,"P":169,"K":436,"Zn":1.3,"Cu":0.34,"Mn":1.0,"Se":1,"iodine":1,"Cr":1,"Mo":50,"o3":0}},{"key":"feta","label":"Feta cheese","units":[["g",1]],"per100":{"kcal":264,"prot":14,"fat":21,"carb":4,"fib":0,"vitA":125,"vitC":0,"vitD":0.4,"vitE":0.18,"vitK":1.8,"B1":0.15,"B2":0.84,"B3":0.99,"B5":0.97,"B6":0.42,"biotin":2,"folate":32,"B12":1.7,"choline":15,"Ca":493,"Fe":0.65,"Mg":19,"P":337,"K":62,"Zn":2.9,"Cu":0.03,"Mn":0.03,"Se":15,"iodine":20,"Cr":1,"Mo":5,"o3":0}},{"key":"tofu_ca","label":"Firm tofu (calcium-set)","units":[["g",1]],"per100":{"kcal":144,"prot":17,"fat":8.7,"carb":2.8,"fib":2,"vitA":0,"vitC":0.1,"vitD":0,"vitE":0.01,"vitK":2.4,"B1":0.16,"B2":0.1,"B3":0.4,"B5":0.1,"B6":0.1,"biotin":2,"folate":29,"B12":0,"choline":28,"Ca":350,"Fe":2.7,"Mg":60,"P":190,"K":180,"Zn":1.6,"Cu":0.4,"Mn":1.2,"Se":17,"iodine":1,"Cr":1,"Mo":90,"o3":0}},{"key":"gyogurt","label":"Greek yogurt (0-2%)","units":[["g",1]],"per100":{"kcal":59,"prot":10,"fat":0.4,"carb":3.6,"fib":0,"vitA":1,"vitC":0,"vitD":0,"vitE":0.01,"vitK":0,"B1":0.02,"B2":0.28,"B3":0.2,"B5":0.33,"B6":0.06,"biotin":2,"folate":7,"B12":0.75,"choline":15,"Ca":110,"Fe":0.07,"Mg":11,"P":135,"K":141,"Zn":0.5,"Cu":0.01,"Mn":0.01,"Se":9.7,"iodine":30,"Cr":1,"Mo":8,"o3":0}},{"key":"hummus","label":"Hummus","units":[["g",1]],"per100":{"kcal":166,"prot":7.9,"fat":9.6,"carb":14,"fib":6,"vitA":1,"vitC":8,"vitD":0,"vitE":0.65,"vitK":5,"B1":0.18,"B2":0.06,"B3":0.58,"B5":0.3,"B6":0.4,"biotin":2,"folate":83,"B12":0,"choline":40,"Ca":38,"Fe":2.4,"Mg":71,"P":176,"K":228,"Zn":1.4,"Cu":0.4,"Mn":0.6,"Se":3,"iodine":0,"Cr":1,"Mo":20,"o3":0}},{"key":"iodsalt_g","label":"Iodised salt","units":[["pinch",0.4],["tsp",6],["g",1]],"per100":{"kcal":0,"prot":0,"fat":0,"carb":0,"fib":0,"vitA":0,"vitC":0,"vitD":0,"vitE":0,"vitK":0,"B1":0,"B2":0,"B3":0,"B5":0,"B6":0,"biotin":0,"folate":0,"B12":0,"choline":0,"Ca":0,"Fe":0,"Mg":0,"P":0,"K":0,"Zn":0,"Cu":0,"Mn":0,"Se":0,"iodine":3000,"Cr":0,"Mo":0,"o3":0}},{"key":"kidneybean_c","label":"Kidney beans","units":[["g",1]],"per100":{"kcal":127,"prot":8.7,"fat":0.5,"carb":22.8,"fib":6.4,"vitA":0,"vitC":1.2,"vitD":0,"vitE":0.03,"vitK":8.4,"B1":0.16,"B2":0.06,"B3":0.58,"B5":0.22,"B6":0.12,"biotin":1,"folate":130,"B12":0,"choline":45,"Ca":35,"Fe":2.9,"Mg":42,"P":138,"K":405,"Zn":1.0,"Cu":0.22,"Mn":0.43,"Se":1.1,"iodine":0,"Cr":1,"Mo":40,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":127,"prot":8.7,"fat":0.5,"carb":22.8,"fib":6.4,"vitA":0,"vitC":1.2,"vitD":0,"vitE":0.03,"vitK":8.4,"B1":0.16,"B2":0.06,"B3":0.58,"B5":0.22,"B6":0.12,"biotin":1,"folate":130,"B12":0,"choline":45,"Ca":35,"Fe":2.9,"Mg":42,"P":138,"K":405,"Zn":1.0,"Cu":0.22,"Mn":0.43,"Se":1.1,"iodine":0,"Cr":1,"Mo":40,"o3":0},"raw":{"kcal":337,"prot":22.5,"fat":1.1,"carb":61,"fib":15.2,"vitA":0.0,"vitC":3.184,"vitD":0.0,"vitE":0.08,"vitK":22.29,"B1":0.425,"B2":0.159,"B3":1.539,"B5":0.584,"B6":0.318,"biotin":2.654,"folate":344.961,"B12":0.0,"choline":119.409,"Ca":92.874,"Fe":7.695,"Mg":111.449,"P":366.189,"K":1074.685,"Zn":2.654,"Cu":0.584,"Mn":1.141,"Se":2.919,"iodine":0.0,"Cr":2.654,"Mo":106.142,"o3":0.0}}},{"key":"kiwi","label":"Kiwi","units":[["kiwi",75],["g",1]],"per100":{"kcal":61,"prot":1.1,"fat":0.5,"carb":15,"fib":3,"vitA":4,"vitC":93,"vitD":0,"vitE":1.5,"vitK":40,"B1":0.03,"B2":0.03,"B3":0.34,"B5":0.18,"B6":0.06,"biotin":1,"folate":25,"B12":0,"choline":8,"Ca":34,"Fe":0.31,"Mg":17,"P":34,"K":312,"Zn":0.14,"Cu":0.13,"Mn":0.1,"Se":0.2,"iodine":1,"Cr":1,"Mo":5,"o3":0}},{"key":"lentils","label":"Lentils","units":[["g",1]],"per100":{"kcal":116,"prot":9,"fat":0.4,"carb":20,"fib":8,"vitA":1,"vitC":1.5,"vitD":0,"vitE":0.11,"vitK":1.7,"B1":0.17,"B2":0.07,"B3":1.1,"B5":0.64,"B6":0.18,"biotin":5,"folate":181,"B12":0,"choline":32,"Ca":19,"Fe":3.3,"Mg":36,"P":180,"K":369,"Zn":1.3,"Cu":0.25,"Mn":0.5,"Se":2.8,"iodine":1,"Cr":1,"Mo":70,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":116,"prot":9,"fat":0.4,"carb":20,"fib":8,"vitA":1,"vitC":1.5,"vitD":0,"vitE":0.11,"vitK":1.7,"B1":0.17,"B2":0.07,"B3":1.1,"B5":0.64,"B6":0.18,"biotin":5,"folate":181,"B12":0,"choline":32,"Ca":19,"Fe":3.3,"Mg":36,"P":180,"K":369,"Zn":1.3,"Cu":0.25,"Mn":0.5,"Se":2.8,"iodine":1,"Cr":1,"Mo":70,"o3":0},"raw":{"kcal":352,"prot":24.6,"fat":1.1,"carb":63,"fib":10.7,"vitA":3.034,"vitC":4.552,"vitD":0.0,"vitE":0.334,"vitK":5.159,"B1":0.516,"B2":0.212,"B3":3.338,"B5":1.942,"B6":0.546,"biotin":15.172,"folate":549.241,"B12":0.0,"choline":97.103,"Ca":57.655,"Fe":10.014,"Mg":109.241,"P":546.207,"K":1119.724,"Zn":3.945,"Cu":0.759,"Mn":1.517,"Se":8.497,"iodine":3.034,"Cr":3.034,"Mo":212.414,"o3":0.0}}},{"key":"mackerel","label":"Mackerel","units":[["g",1]],"per100":{"kcal":262,"prot":24,"fat":18,"carb":0,"fib":0,"vitA":50,"vitC":0,"vitD":16,"vitE":1.5,"vitK":5.0,"B1":0.12,"B2":0.5,"B3":9,"B5":0.86,"B6":0.4,"biotin":5,"folate":1,"B12":19,"choline":80,"Ca":15,"Fe":1.6,"Mg":34,"P":280,"K":401,"Zn":0.9,"Cu":0.1,"Mn":0.02,"Se":44,"iodine":25,"Cr":1,"Mo":2,"o3":2600},"default":"cooked","forms":{"cooked":{"kcal":262,"prot":24,"fat":18,"carb":0,"fib":0,"vitA":50,"vitC":0,"vitD":16,"vitE":1.5,"vitK":5.0,"B1":0.12,"B2":0.5,"B3":9,"B5":0.86,"B6":0.4,"biotin":5,"folate":1,"B12":19,"choline":80,"Ca":15,"Fe":1.6,"Mg":34,"P":280,"K":401,"Zn":0.9,"Cu":0.1,"Mn":0.02,"Se":44,"iodine":25,"Cr":1,"Mo":2,"o3":2600},"raw":{"kcal":205,"prot":19,"fat":13.9,"carb":0,"fib":0,"vitA":39.122,"vitC":0.0,"vitD":12.519,"vitE":1.174,"vitK":3.912,"B1":0.094,"B2":0.391,"B3":7.042,"B5":0.673,"B6":0.313,"biotin":3.912,"folate":0.782,"B12":14.866,"choline":62.595,"Ca":11.737,"Fe":1.252,"Mg":26.603,"P":219.084,"K":313.76,"Zn":0.704,"Cu":0.078,"Mn":0.016,"Se":34.427,"iodine":19.561,"Cr":0.782,"Mo":1.565,"o3":2034.351}}},{"key":"mozzarella","label":"Mozzarella","units":[["g",1]],"per100":{"kcal":300,"prot":22,"fat":22,"carb":2.2,"fib":0,"vitA":180,"vitC":0,"vitD":0.4,"vitE":0.19,"vitK":2.3,"B1":0.03,"B2":0.28,"B3":0.1,"B5":0.14,"B6":0.04,"biotin":2,"folate":7,"B12":2.3,"choline":15,"Ca":505,"Fe":0.44,"Mg":20,"P":354,"K":76,"Zn":2.9,"Cu":0.01,"Mn":0.03,"Se":17,"iodine":20,"Cr":1,"Mo":5,"o3":0}},{"key":"mushroom","label":"Mushrooms","units":[["g",1]],"per100":{"kcal":22,"prot":3.1,"fat":0.3,"carb":3.3,"fib":1,"vitA":0,"vitC":2.1,"vitD":0.2,"vitE":0.01,"vitK":0,"B1":0.08,"B2":0.4,"B3":3.6,"B5":1.5,"B6":0.1,"biotin":12,"folate":17,"B12":0.04,"choline":17,"Ca":3,"Fe":0.5,"Mg":9,"P":86,"K":318,"Zn":0.52,"Cu":0.32,"Mn":0.05,"Se":9.3,"iodine":1,"Cr":1,"Mo":5,"o3":0}},{"key":"oats","label":"Oats","units":[["g",1]],"per100":{"kcal":379,"prot":13.2,"fat":6.5,"carb":67,"fib":10,"vitA":0,"vitC":0,"vitD":0,"vitE":0.42,"vitK":2.0,"B1":0.46,"B2":0.16,"B3":1.1,"B5":1.3,"B6":0.12,"biotin":20,"folate":32,"B12":0,"choline":40,"Ca":52,"Fe":4.7,"Mg":138,"P":410,"K":362,"Zn":3.6,"Cu":0.4,"Mn":3.6,"Se":28,"iodine":0,"Cr":2,"Mo":20,"o3":0},"default":"raw","forms":{"raw":{"kcal":379,"prot":13.2,"fat":6.5,"carb":67,"fib":10,"vitA":0,"vitC":0,"vitD":0,"vitE":0.42,"vitK":2.0,"B1":0.46,"B2":0.16,"B3":1.1,"B5":1.3,"B6":0.12,"biotin":20,"folate":32,"B12":0,"choline":40,"Ca":52,"Fe":4.7,"Mg":138,"P":410,"K":362,"Zn":3.6,"Cu":0.4,"Mn":3.6,"Se":28,"iodine":0,"Cr":2,"Mo":20,"o3":0},"cooked":{"kcal":71,"prot":2.4,"fat":1.4,"carb":12,"fib":1.7,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.079,"vitK":0.375,"B1":0.086,"B2":0.03,"B3":0.206,"B5":0.244,"B6":0.022,"biotin":3.747,"folate":5.995,"B12":0.0,"choline":7.493,"Ca":9.741,"Fe":0.88,"Mg":25.852,"P":76.807,"K":67.815,"Zn":0.674,"Cu":0.075,"Mn":0.674,"Se":5.245,"iodine":0.0,"Cr":0.375,"Mo":3.747,"o3":0.0}}},{"key":"oliveoil_g","label":"Olive oil","units":[["ml",0.92],["tsp",4.5],["g",1]],"per100":{"kcal":884,"prot":0,"fat":100,"carb":0,"fib":0,"vitA":0,"vitC":0,"vitD":0,"vitE":14,"vitK":60,"B1":0,"B2":0,"B3":0,"B5":0,"B6":0,"biotin":0,"folate":0,"B12":0,"choline":0,"Ca":0,"Fe":0.56,"Mg":0,"P":0,"K":1,"Zn":0,"Cu":0,"Mn":0,"Se":0,"iodine":0,"Cr":0,"Mo":0,"o3":0}},{"key":"orange","label":"Orange","units":[["orange",130],["g",1]],"per100":{"kcal":47,"prot":0.9,"fat":0.1,"carb":12,"fib":2.4,"vitA":11,"vitC":53,"vitD":0,"vitE":0.18,"vitK":0,"B1":0.09,"B2":0.04,"B3":0.28,"B5":0.25,"B6":0.06,"biotin":1,"folate":30,"B12":0,"choline":8,"Ca":40,"Fe":0.1,"Mg":10,"P":14,"K":181,"Zn":0.07,"Cu":0.04,"Mn":0.03,"Se":0.5,"iodine":1,"Cr":1,"Mo":5,"o3":0}},{"key":"whitepasta_ck","label":"Pasta","units":[["g",1]],"per100":{"kcal":157,"prot":5.8,"fat":0.9,"carb":31,"fib":1.8,"vitA":0,"vitC":0,"vitD":0,"vitE":0.06,"vitK":0,"B1":0.2,"B2":0.05,"B3":1.4,"B5":0.15,"B6":0.05,"biotin":1,"folate":18,"B12":0,"choline":10,"Ca":7,"Fe":1.3,"Mg":18,"P":58,"K":44,"Zn":0.5,"Cu":0.1,"Mn":0.3,"Se":26,"iodine":1,"Cr":1,"Mo":15,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":157,"prot":5.8,"fat":0.9,"carb":31,"fib":1.8,"vitA":0,"vitC":0,"vitD":0,"vitE":0.06,"vitK":0,"B1":0.2,"B2":0.05,"B3":1.4,"B5":0.15,"B6":0.05,"biotin":1,"folate":18,"B12":0,"choline":10,"Ca":7,"Fe":1.3,"Mg":18,"P":58,"K":44,"Zn":0.5,"Cu":0.1,"Mn":0.3,"Se":26,"iodine":1,"Cr":1,"Mo":15,"o3":0},"raw":{"kcal":371,"prot":13,"fat":1.5,"carb":75,"fib":3.2,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.142,"vitK":0.0,"B1":0.473,"B2":0.118,"B3":3.308,"B5":0.354,"B6":0.118,"biotin":2.363,"folate":42.535,"B12":0.0,"choline":23.631,"Ca":16.541,"Fe":3.072,"Mg":42.535,"P":137.057,"K":103.975,"Zn":1.182,"Cu":0.236,"Mn":0.709,"Se":61.439,"iodine":2.363,"Cr":2.363,"Mo":35.446,"o3":0.0}}},{"key":"peanutbutter","label":"Peanut butter","units":[["g",1]],"per100":{"kcal":589,"prot":25,"fat":50,"carb":20,"fib":6,"vitA":0,"vitC":0,"vitD":0,"vitE":9,"vitK":0,"B1":0.1,"B2":0.11,"B3":13.7,"B5":1.1,"B6":0.44,"biotin":30,"folate":87,"B12":0,"choline":61,"Ca":43,"Fe":1.9,"Mg":154,"P":335,"K":690,"Zn":2.9,"Cu":0.4,"Mn":1.7,"Se":4,"iodine":0,"Cr":1,"Mo":10,"o3":0}},{"key":"peas","label":"Peas, cooked","units":[["g",1]],"per100":{"kcal":84,"prot":5.4,"fat":0.4,"carb":15,"fib":5.5,"vitA":38,"vitC":14,"vitD":0,"vitE":0.13,"vitK":24,"B1":0.26,"B2":0.13,"B3":2,"B5":0.1,"B6":0.22,"biotin":1,"folate":65,"B12":0,"choline":28,"Ca":27,"Fe":1.5,"Mg":39,"P":117,"K":271,"Zn":1.2,"Cu":0.18,"Mn":0.4,"Se":1.8,"iodine":1,"Cr":1,"Mo":15,"o3":0}},{"key":"potato","label":"Potato, baked","units":[["g",1]],"per100":{"kcal":93,"prot":2.5,"fat":0.1,"carb":21,"fib":2.2,"vitA":1,"vitC":13,"vitD":0,"vitE":0.04,"vitK":2.0,"B1":0.07,"B2":0.03,"B3":1.4,"B5":0.55,"B6":0.31,"biotin":1,"folate":28,"B12":0,"choline":14,"Ca":15,"Fe":1.1,"Mg":28,"P":70,"K":535,"Zn":0.35,"Cu":0.12,"Mn":0.15,"Se":0.3,"iodine":1,"Cr":1,"Mo":5,"o3":0}},{"key":"prawn","label":"Prawns","units":[["g",1]],"per100":{"kcal":99,"prot":24,"fat":0.3,"carb":0.2,"fib":0,"vitA":9,"vitC":0,"vitD":0.1,"vitE":1.1,"vitK":0.3,"B1":0.03,"B2":0.04,"B3":2.5,"B5":0.28,"B6":0.15,"biotin":1,"folate":10,"B12":1.7,"choline":115,"Ca":70,"Fe":0.5,"Mg":39,"P":240,"K":259,"Zn":1.6,"Cu":0.2,"Mn":0.06,"Se":40,"iodine":38,"Cr":1,"Mo":1,"o3":300},"default":"cooked","forms":{"cooked":{"kcal":99,"prot":24,"fat":0.3,"carb":0.2,"fib":0,"vitA":9,"vitC":0,"vitD":0.1,"vitE":1.1,"vitK":0.3,"B1":0.03,"B2":0.04,"B3":2.5,"B5":0.28,"B6":0.15,"biotin":1,"folate":10,"B12":1.7,"choline":115,"Ca":70,"Fe":0.5,"Mg":39,"P":240,"K":259,"Zn":1.6,"Cu":0.2,"Mn":0.06,"Se":40,"iodine":38,"Cr":1,"Mo":1,"o3":300},"raw":{"kcal":85,"prot":20,"fat":0.5,"carb":0.9,"fib":0,"vitA":7.727,"vitC":0.0,"vitD":0.086,"vitE":0.944,"vitK":0.258,"B1":0.026,"B2":0.034,"B3":2.146,"B5":0.24,"B6":0.129,"biotin":0.859,"folate":8.586,"B12":1.46,"choline":98.737,"Ca":60.101,"Fe":0.429,"Mg":33.485,"P":206.061,"K":222.374,"Zn":1.374,"Cu":0.172,"Mn":0.052,"Se":34.343,"iodine":32.626,"Cr":0.859,"Mo":0.859,"o3":257.576}}},{"key":"pumpkinseed","label":"Pumpkin seeds","units":[["g",1]],"per100":{"kcal":559,"prot":30,"fat":49,"carb":11,"fib":6,"vitA":1,"vitC":1.9,"vitD":0,"vitE":2.2,"vitK":7.3,"B1":0.27,"B2":0.15,"B3":4.9,"B5":0.34,"B6":0.14,"biotin":5,"folate":58,"B12":0,"choline":63,"Ca":46,"Fe":8.8,"Mg":592,"P":1233,"K":809,"Zn":7.8,"Cu":1.3,"Mn":4.5,"Se":9.4,"iodine":1,"Cr":1,"Mo":20,"o3":0}},{"key":"quinoa_ck","label":"Quinoa","units":[["g",1]],"per100":{"kcal":120,"prot":4.4,"fat":1.9,"carb":21,"fib":2.8,"vitA":0,"vitC":0,"vitD":0,"vitE":0.6,"vitK":0,"B1":0.1,"B2":0.1,"B3":0.4,"B5":0.3,"B6":0.12,"biotin":2,"folate":42,"B12":0,"choline":23,"Ca":17,"Fe":1.5,"Mg":64,"P":152,"K":172,"Zn":1.1,"Cu":0.19,"Mn":0.6,"Se":5,"iodine":1,"Cr":1,"Mo":20,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":120,"prot":4.4,"fat":1.9,"carb":21,"fib":2.8,"vitA":0,"vitC":0,"vitD":0,"vitE":0.6,"vitK":0,"B1":0.1,"B2":0.1,"B3":0.4,"B5":0.3,"B6":0.12,"biotin":2,"folate":42,"B12":0,"choline":23,"Ca":17,"Fe":1.5,"Mg":64,"P":152,"K":172,"Zn":1.1,"Cu":0.19,"Mn":0.6,"Se":5,"iodine":1,"Cr":1,"Mo":20,"o3":0},"raw":{"kcal":368,"prot":14.1,"fat":6.1,"carb":64,"fib":7,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":1.84,"vitK":0.0,"B1":0.307,"B2":0.307,"B3":1.227,"B5":0.92,"B6":0.368,"biotin":6.133,"folate":128.8,"B12":0.0,"choline":70.533,"Ca":52.133,"Fe":4.6,"Mg":196.267,"P":466.133,"K":527.467,"Zn":3.373,"Cu":0.583,"Mn":1.84,"Se":15.333,"iodine":3.067,"Cr":3.067,"Mo":61.333,"o3":0.0}}},{"key":"redpepper","label":"Red pepper","units":[["g",1]],"per100":{"kcal":31,"prot":1,"fat":0.3,"carb":6,"fib":2.1,"vitA":157,"vitC":128,"vitD":0,"vitE":1.6,"vitK":5,"B1":0.05,"B2":0.09,"B3":1,"B5":0.32,"B6":0.29,"biotin":1,"folate":46,"B12":0,"choline":6,"Ca":7,"Fe":0.43,"Mg":12,"P":26,"K":211,"Zn":0.25,"Cu":0.02,"Mn":0.11,"Se":0.1,"iodine":1,"Cr":1,"Mo":3,"o3":0}},{"key":"rocket","label":"Rocket/salad greens","units":[["g",1]],"per100":{"kcal":25,"prot":2.6,"fat":0.7,"carb":3.7,"fib":1.6,"vitA":119,"vitC":15,"vitD":0,"vitE":0.43,"vitK":109,"B1":0.04,"B2":0.09,"B3":0.3,"B5":0.44,"B6":0.07,"biotin":1,"folate":97,"B12":0,"choline":15,"Ca":160,"Fe":1.5,"Mg":47,"P":52,"K":369,"Zn":0.47,"Cu":0.08,"Mn":0.32,"Se":0.3,"iodine":2,"Cr":1,"Mo":5,"o3":0}},{"key":"salmon","label":"Salmon","units":[["g",1]],"per100":{"kcal":200,"prot":25,"fat":12,"carb":0,"fib":0,"vitA":15,"vitC":0,"vitD":11,"vitE":1.1,"vitK":0.1,"B1":0.2,"B2":0.4,"B3":8.5,"B5":1.6,"B6":0.6,"biotin":5,"folate":26,"B12":3.2,"choline":90,"Ca":12,"Fe":0.5,"Mg":29,"P":240,"K":380,"Zn":0.4,"Cu":0.05,"Mn":0.02,"Se":36,"iodine":35,"Cr":1,"Mo":1,"o3":2200},"default":"cooked","forms":{"cooked":{"kcal":200,"prot":25,"fat":12,"carb":0,"fib":0,"vitA":15,"vitC":0,"vitD":11,"vitE":1.1,"vitK":0.1,"B1":0.2,"B2":0.4,"B3":8.5,"B5":1.6,"B6":0.6,"biotin":5,"folate":26,"B12":3.2,"choline":90,"Ca":12,"Fe":0.5,"Mg":29,"P":240,"K":380,"Zn":0.4,"Cu":0.05,"Mn":0.02,"Se":36,"iodine":35,"Cr":1,"Mo":1,"o3":2200},"raw":{"kcal":185,"prot":20,"fat":11,"carb":0,"fib":0,"vitA":13.875,"vitC":0.0,"vitD":10.175,"vitE":1.018,"vitK":0.093,"B1":0.185,"B2":0.37,"B3":7.863,"B5":1.48,"B6":0.555,"biotin":4.625,"folate":24.05,"B12":2.96,"choline":83.25,"Ca":11.1,"Fe":0.463,"Mg":26.825,"P":222.0,"K":351.5,"Zn":0.37,"Cu":0.046,"Mn":0.019,"Se":33.3,"iodine":32.375,"Cr":0.925,"Mo":0.925,"o3":2035.0}}},{"key":"sardine","label":"Sardines, canned (in oil, drained)","units":[["g",1]],"per100":{"kcal":208,"prot":25,"fat":11,"carb":0,"fib":0,"vitA":32,"vitC":0,"vitD":4.8,"vitE":2.0,"vitK":2.6,"B1":0.04,"B2":0.23,"B3":5.2,"B5":0.64,"B6":0.17,"biotin":5,"folate":10,"B12":8.9,"choline":75,"Ca":382,"Fe":2.9,"Mg":39,"P":490,"K":397,"Zn":1.3,"Cu":0.19,"Mn":0.11,"Se":52,"iodine":30,"Cr":1,"Mo":2,"o3":1400}},{"key":"milk","label":"Semi-skimmed milk","units":[["ml",1.03],["g",1]],"per100":{"kcal":50,"prot":3.4,"fat":1.8,"carb":4.8,"fib":0,"vitA":20,"vitC":0,"vitD":0,"vitE":0.03,"vitK":0.2,"B1":0.04,"B2":0.18,"B3":0.09,"B5":0.36,"B6":0.04,"biotin":2,"folate":5,"B12":0.45,"choline":16,"Ca":120,"Fe":0.03,"Mg":11,"P":95,"K":150,"Zn":0.4,"Cu":0.01,"Mn":0.004,"Se":3,"iodine":55,"Cr":1,"Mo":5,"o3":0}},{"key":"smokedsalmon","label":"Smoked salmon","units":[["g",1]],"per100":{"kcal":117,"prot":18,"fat":4.3,"carb":0,"fib":0,"vitA":15,"vitC":0,"vitD":17,"vitE":1.4,"vitK":0.1,"B1":0.1,"B2":0.1,"B3":5,"B5":0.8,"B6":0.2,"biotin":4,"folate":10,"B12":3.0,"choline":80,"Ca":11,"Fe":0.8,"Mg":18,"P":164,"K":175,"Zn":0.3,"Cu":0.04,"Mn":0.02,"Se":32,"iodine":40,"Cr":1,"Mo":1,"o3":1500}},{"key":"spinach","label":"Spinach, cooked","units":[["g",1]],"per100":{"kcal":23,"prot":3,"fat":0.4,"carb":3.8,"fib":2.4,"vitA":524,"vitC":10,"vitD":0,"vitE":2.0,"vitK":494,"B1":0.1,"B2":0.24,"B3":0.5,"B5":0.1,"B6":0.24,"biotin":3,"folate":146,"B12":0,"choline":20,"Ca":136,"Fe":3.6,"Mg":87,"P":56,"K":466,"Zn":0.8,"Cu":0.17,"Mn":0.9,"Se":1.5,"iodine":2,"Cr":1,"Mo":10,"o3":0}},{"key":"sunflowerseed","label":"Sunflower seeds","units":[["g",1]],"per100":{"kcal":584,"prot":21,"fat":51,"carb":20,"fib":8.6,"vitA":3,"vitC":1.4,"vitD":0,"vitE":35,"vitK":0,"B1":1.5,"B2":0.36,"B3":8.3,"B5":1.1,"B6":1.3,"biotin":5,"folate":227,"B12":0,"choline":55,"Ca":78,"Fe":5.2,"Mg":325,"P":660,"K":645,"Zn":5.0,"Cu":1.8,"Mn":2.0,"Se":53,"iodine":1,"Cr":1,"Mo":30,"o3":0}},{"key":"sweetpot","label":"Sweet potato, baked","units":[["g",1]],"per100":{"kcal":90,"prot":2,"fat":0.1,"carb":21,"fib":3.3,"vitA":960,"vitC":20,"vitD":0,"vitE":0.7,"vitK":2.3,"B1":0.1,"B2":0.1,"B3":1.5,"B5":0.8,"B6":0.29,"biotin":3,"folate":6,"B12":0,"choline":13,"Ca":38,"Fe":0.7,"Mg":27,"P":54,"K":475,"Zn":0.3,"Cu":0.16,"Mn":0.5,"Se":0.2,"iodine":1,"Cr":1,"Mo":2,"o3":0}},{"key":"tempeh","label":"Tempeh","units":[["g",1]],"per100":{"kcal":192,"prot":20,"fat":11,"carb":8,"fib":0,"vitA":0,"vitC":0,"vitD":0,"vitE":0.1,"vitK":0,"B1":0.08,"B2":0.36,"B3":2.6,"B5":0.28,"B6":0.22,"biotin":1,"folate":24,"B12":0.1,"choline":30,"Ca":111,"Fe":2.7,"Mg":81,"P":266,"K":412,"Zn":1.1,"Cu":0.56,"Mn":1.3,"Se":0,"iodine":1,"Cr":1,"Mo":90,"o3":0}},{"key":"tomato","label":"Tomatoes","units":[["g",1]],"per100":{"kcal":18,"prot":0.9,"fat":0.2,"carb":3.9,"fib":1.2,"vitA":42,"vitC":14,"vitD":0,"vitE":0.54,"vitK":8,"B1":0.04,"B2":0.02,"B3":0.6,"B5":0.09,"B6":0.08,"biotin":1,"folate":15,"B12":0,"choline":7,"Ca":10,"Fe":0.27,"Mg":11,"P":24,"K":237,"Zn":0.17,"Cu":0.06,"Mn":0.11,"Se":0,"iodine":1,"Cr":1,"Mo":3,"o3":0}},{"key":"tuna_can","label":"Tuna, canned in water","units":[["g",1]],"per100":{"kcal":116,"prot":26,"fat":0.8,"carb":0,"fib":0,"vitA":5,"vitC":0,"vitD":1.7,"vitE":0.9,"vitK":0.2,"B1":0.03,"B2":0.07,"B3":13,"B5":0.28,"B6":0.32,"biotin":3,"folate":4,"B12":2.5,"choline":30,"Ca":11,"Fe":0.8,"Mg":30,"P":200,"K":250,"Zn":0.5,"Cu":0.04,"Mn":0.01,"Se":80,"iodine":15,"Cr":1,"Mo":1,"o3":300}},{"key":"walnut","label":"Walnuts","units":[["half",5],["g",1]],"per100":{"kcal":654,"prot":15,"fat":65,"carb":14,"fib":6.7,"vitA":1,"vitC":1.3,"vitD":0,"vitE":0.7,"vitK":2.7,"B1":0.34,"B2":0.15,"B3":1.1,"B5":0.57,"B6":0.54,"biotin":20,"folate":98,"B12":0,"choline":39,"Ca":98,"Fe":2.9,"Mg":158,"P":346,"K":441,"Zn":3.1,"Cu":1.6,"Mn":3.4,"Se":4.9,"iodine":0,"Cr":1,"Mo":10,"o3":0}},{"key":"whey","label":"Whey protein","units":[["scoop",30],["g",1]],"per100":{"kcal":400,"prot":80,"fat":5,"carb":10,"fib":0,"vitA":100,"vitC":0,"vitD":0,"vitE":0,"vitK":0,"B1":0.3,"B2":1,"B3":0.7,"B5":1.7,"B6":0.3,"biotin":3,"folate":100,"B12":4,"choline":133,"Ca":500,"Fe":1.7,"Mg":100,"P":500,"K":667,"Zn":5,"Cu":0.3,"Mn":0.17,"Se":67,"iodine":17,"Cr":3,"Mo":17,"o3":0}},{"key":"whiterice_c","label":"White rice","units":[["g",1]],"per100":{"kcal":130,"prot":2.7,"fat":0.3,"carb":28,"fib":0.4,"vitA":0,"vitC":0,"vitD":0,"vitE":0.04,"vitK":0,"B1":0.16,"B2":0.02,"B3":1.5,"B5":0.39,"B6":0.09,"biotin":1,"folate":58,"B12":0,"choline":2,"Ca":10,"Fe":1.2,"Mg":12,"P":43,"K":35,"Zn":0.5,"Cu":0.07,"Mn":0.47,"Se":7.5,"iodine":0,"Cr":1,"Mo":15,"o3":0},"default":"cooked","forms":{"cooked":{"kcal":130,"prot":2.7,"fat":0.3,"carb":28,"fib":0.4,"vitA":0,"vitC":0,"vitD":0,"vitE":0.04,"vitK":0,"B1":0.16,"B2":0.02,"B3":1.5,"B5":0.39,"B6":0.09,"biotin":1,"folate":58,"B12":0,"choline":2,"Ca":10,"Fe":1.2,"Mg":12,"P":43,"K":35,"Zn":0.5,"Cu":0.07,"Mn":0.47,"Se":7.5,"iodine":0,"Cr":1,"Mo":15,"o3":0},"raw":{"kcal":365,"prot":7.1,"fat":0.7,"carb":80,"fib":1.3,"vitA":0.0,"vitC":0.0,"vitD":0.0,"vitE":0.112,"vitK":0.0,"B1":0.449,"B2":0.056,"B3":4.212,"B5":1.095,"B6":0.253,"biotin":2.808,"folate":162.846,"B12":0.0,"choline":5.615,"Ca":28.077,"Fe":3.369,"Mg":33.692,"P":120.731,"K":98.269,"Zn":1.404,"Cu":0.197,"Mn":1.32,"Se":21.058,"iodine":0.0,"Cr":2.808,"Mo":42.115,"o3":0.0}}},{"key":"egg","label":"Whole egg (large, ~50g)","units":[["egg",50],["g",1]],"per100":{"kcal":143,"prot":12.6,"fat":9.5,"carb":0.7,"fib":0,"vitA":160,"vitC":0,"vitD":2.0,"vitE":1.05,"vitK":0.3,"B1":0.04,"B2":0.46,"B3":0.075,"B5":1.53,"B6":0.17,"biotin":20,"folate":47,"B12":0.89,"choline":294,"Ca":56,"Fe":1.75,"Mg":12,"P":198,"K":138,"Zn":1.29,"Cu":0.07,"Mn":0.028,"Se":30.7,"iodine":40,"Cr":1,"Mo":9,"o3":40}},{"key":"wgbread","label":"Wholegrain bread","units":[["g",1]],"per100":{"kcal":247,"prot":13,"fat":3.4,"carb":41,"fib":6,"vitA":0,"vitC":0,"vitD":0,"vitE":0.5,"vitK":5,"B1":0.4,"B2":0.2,"B3":4,"B5":0.6,"B6":0.2,"biotin":3,"folate":42,"B12":0,"choline":20,"Ca":107,"Fe":2.5,"Mg":76,"P":212,"K":250,"Zn":1.8,"Cu":0.26,"Mn":2.0,"Se":25,"iodine":5,"Cr":1,"Mo":30,"o3":0}}],"editKeys":["kcal","prot","vitA","vitC","vitD","vitE","vitK","B1","B2","B3","B5","B6","biotin","folate","B12","choline","Ca","Fe","Mg","P","K","Zn","Cu","Mn","Se","iodine","Cr","Mo","o3"],"editLabels":{"kcal":"Calories","prot":"Protein","vitA":"Vitamin A","vitC":"Vitamin C","vitD":"Vitamin D","vitE":"Vitamin E","vitK":"Vitamin K","B1":"Thiamin (B1)","B2":"Riboflavin (B2)","B3":"Niacin (B3)","B5":"Pantothenic acid (B5)","B6":"Vitamin B6","biotin":"Biotin (B7)","folate":"Folate (B9)","B12":"Vitamin B12","choline":"Choline","Ca":"Calcium","Fe":"Iron","Mg":"Magnesium","P":"Phosphorus","K":"Potassium","Zn":"Zinc","Cu":"Copper","Mn":"Manganese","Se":"Selenium","iodine":"Iodine","Cr":"Chromium","Mo":"Molybdenum","o3":"Omega-3 (EPA+DHA)"},"editUnits":{"kcal":"kcal","prot":"g","vitA":"mcg","vitC":"mg","vitD":"mcg","vitE":"mg","vitK":"mcg","B1":"mg","B2":"mg","B3":"mg","B5":"mg","B6":"mg","biotin":"mcg","folate":"mcg","B12":"mcg","choline":"mg","Ca":"mg","Fe":"mg","Mg":"mg","P":"mg","K":"mg","Zn":"mg","Cu":"mg","Mn":"mg","Se":"mcg","iodine":"mcg","Cr":"mcg","Mo":"mcg","o3":"mg"}};
 const CATS=['breakfast','lunch','dinner'];
 const TITLES={breakfast:'Breakfast',lunch:'Lunch',dinner:'Dinner'};
-
-const state={breakfast:null,lunch:null,dinner:null,boosters:[],detail:true};
-try{const s=JSON.parse(localStorage.getItem('fullplate')||'{}');Object.assign(state,s);if(!Array.isArray(state.boosters))state.boosters=[];}catch(e){}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const round1=x=>Math.round(x*10)/10;
+const state={breakfast:null,lunch:null,dinner:null,boosters:[],customMeals:[],overrides:{},customFoods:[],detail:true};
+try{const s=JSON.parse(localStorage.getItem('fullplate')||'{}');Object.assign(state,s);
+  if(!Array.isArray(state.boosters))state.boosters=[];if(!Array.isArray(state.customMeals))state.customMeals=[];if(!state.overrides||typeof state.overrides!=='object')state.overrides={};if(!Array.isArray(state.customFoods))state.customFoods=[];}catch(e){}
 function save(){try{localStorage.setItem('fullplate',JSON.stringify(state));}catch(e){}}
-
-/* build meal sections */
-function buildSections(){
+const ingByLabel=name=>{const n=String(name||'').trim().toLowerCase();return DATA.ingredients.find(i=>i.label.toLowerCase()===n)||state.customFoods.find(i=>i.label.toLowerCase()===n);};
+function refreshInglist(){document.getElementById('inglist').innerHTML=DATA.ingredients.concat(state.customFoods).map(i=>`<option value="${esc(i.label)}">`).join('');}
+function findMeal(cat,id){
+  const b=DATA.meals[cat].find(m=>m.id===id);
+  if(b){const o=state.overrides[id];return o?Object.assign({},b,o,{overridden:true}):b;}
+  return state.customMeals.find(m=>m.id===id&&m.slot===cat)||null;
+}
+function equivGrams(ing,grams,st){
+  const f=ing.forms;if(!f)return null;
+  const other=st==='cooked'?'raw':'cooked';
+  if(!f[st]||!f[other]||!f[st].kcal||!f[other].kcal)return null;
+  return{other,g:Math.round(grams*f[st].kcal/f[other].kcal)};
+}
+function fmtItem(i){
+  const ing=ingByLabel(i.name);
+  const qty=(i.amount||'')+(i.unit&&i.unit!=='g'?' '+i.unit:(i.amount?' g':''));
+  let extra='';
+  if(ing&&ing.forms&&i.state){
+    const uu=(ing.units.find(u=>u[0]===(i.unit||'g'))||['g',1]);
+    const eq=equivGrams(ing,(i.amount||0)*uu[1],i.state);
+    extra=eq?` <span class="eqv">(${i.state} · ≈ ${eq.g} g ${eq.other})</span>`:` (${i.state})`;
+  } else if(i.state) extra=` (${i.state})`;
+  return `${qty} ${esc(i.name)}${extra}`.trim();
+}
+function buildStatic(){
   const root=document.getElementById('sections');
   CATS.forEach(cat=>{
-    const sec=document.createElement('section');sec.className='section';
-    sec.innerHTML=`<div class="sectionhead"><span class="eyebrow">${TITLES[cat]}</span><span class="pickone">pick one</span></div>`;
-    const list=document.createElement('div');list.className='cards';
-    DATA.meals[cat].forEach(m=>{
-      const card=document.createElement('div');card.className='card';card.dataset.cat=cat;card.dataset.id=m.id;
-      const chips=(m.veg?'<span class="chip veg">veg</span>':'')+(m.oily?'<span class="chip oily">oily fish</span>':'');
-      card.innerHTML=`
-        <label class="pick"><input type="radio" name="${cat}" value="${m.id}">
-          <div class="picktext">
-            <div class="chead"><span class="code">${m.code}</span><span class="mname">${m.name}</span></div>
-            <div class="badges"><span class="badge">${m.kcal}<small>kcal</small></span><span class="badge">${Math.round(m.protein)}<small>g protein</small></span>${chips}</div>
-          </div></label>
-        <button class="expand" aria-expanded="false"><span>What's in it</span><span class="chev">▾</span></button>
-        <div class="ing" hidden>
-          <div class="macros">${m.kcal} kcal · ${Math.round(m.protein)} g protein · ${m.fat} g fat · ${m.carb} g carb · ${m.fibre} g fibre</div>
-          <ul>${m.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-      card.querySelector('input').addEventListener('change',()=>select(cat,m.id));
-      const exp=card.querySelector('.expand'),ing=card.querySelector('.ing');
-      exp.addEventListener('click',()=>{const o=exp.getAttribute('aria-expanded')==='true';exp.setAttribute('aria-expanded',String(!o));ing.hidden=o;exp.querySelector('span').textContent=o?"What's in it":"Hide";});
-      list.appendChild(card);
-    });
-    sec.appendChild(list);root.appendChild(sec);
+    const sec=document.createElement('section');sec.className='section';sec.dataset.slot=cat;
+    sec.innerHTML=`<div class="sectionhead"><span class="eyebrow">${TITLES[cat]}</span><span class="pickone">pick one</span></div><div class="cards" data-cards="${cat}"></div>`;
+    root.appendChild(sec);
   });
-  // boosters section
   const bs=document.createElement('section');bs.className='section';
   bs.innerHTML=`<div class="sectionhead"><span class="eyebrow">Boosters</span><span class="pickone" id="boostcount">optional</span></div><div class="boostmsg" id="boostmsg"></div>`;
   const blist=document.createElement('div');blist.className='cards';
   DATA.boosters.forEach(b=>{
     const c=document.createElement('label');c.className='bcard';c.dataset.id=b.id;
-    c.innerHTML=`<input type="checkbox">
-      <div class="btext">
-        <div class="brow"><span class="bname">${b.name}</span><span class="badd">+${b.kcal} · ${Math.round(b.protein)} g P</span></div>
-        <div class="btags"><span class="recoflag">fills a gap</span><span>boosts</span>${b.boosts.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      </div>`;
-    c.querySelector('input').addEventListener('change',e=>toggleBooster(b.id,e.target.checked));
+    c.innerHTML=`<input type="checkbox"><div class="btext"><div class="brow"><span class="bname">${b.name}</span><span class="badd">+${b.kcal} · ${Math.round(b.protein)} g P</span></div><div class="btags"><span class="recoflag">fills a gap</span><span>boosts</span>${b.boosts.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`;
+    c.querySelector('input').addEventListener('change',e=>{state.boosters=state.boosters.filter(x=>x!==b.id);if(e.target.checked)state.boosters.push(b.id);save();update();});
     blist.appendChild(c);
   });
   bs.appendChild(blist);root.appendChild(bs);
+}
+function mealCard(cat,m,custom){
+  const card=document.createElement('div');card.className='card';card.dataset.cat=cat;card.dataset.id=m.id;
+  const chips=custom?'<span class="chip mine">yours</span>':((m.veg?'<span class="chip veg">veg</span>':'')+(m.oily?'<span class="chip oily">oily fish</span>':'')+(m.overridden?'<span class="chip adj">adjusted</span>':''));
+  const code=custom?'MY':m.code;
+  const macros=custom?`${m.kcal} kcal · ${Math.round(m.protein)} g protein${m.fat?` · ${m.fat} g fat`:''}${m.carb?` · ${m.carb} g carb`:''}`:`${m.kcal} kcal · ${Math.round(m.protein)} g protein · ${m.fat} g fat · ${m.carb} g carb · ${m.fibre} g fibre`;
+  const structured=custom?(m.ingredients||[]):(m.items||null);
+  const items=structured?structured.map(fmtItem):m.ingredients;
+  card.innerHTML=`
+    <label class="pick"><input type="radio" name="${cat}" value="${m.id}">
+      <div class="picktext"><div class="chead"><span class="code">${code}</span><span class="mname">${esc(m.name)}</span></div>
+        <div class="badges"><span class="badge">${m.kcal}<small>kcal</small></span><span class="badge">${Math.round(m.protein)}<small>g protein</small></span>${chips}</div></div></label>
+    <button class="expand" aria-expanded="false"><span>What's in it</span><span class="chev">▾</span></button>
+    <div class="ing" hidden><div class="macros">${macros}</div>${items&&items.length?`<ul>${items.map(i=>`<li>${i}</li>`).join('')}</ul>`:'<div style="color:#93a39a">No ingredient list.</div>'}<div class="cardbtns">${custom?`<button class="delmeal" data-del="${m.id}">Delete meal</button>`:`<button class="ghost" data-adjust="${m.id}">Adjust portions</button>${m.overridden?`<button class="delmeal" data-reset="${m.id}">Reset to default</button>`:''}`}</div></div>`;
+  card.querySelector('input').addEventListener('change',()=>select(cat,m.id));
+  const exp=card.querySelector('.expand'),ing=card.querySelector('.ing');
+  exp.addEventListener('click',()=>{const o=exp.getAttribute('aria-expanded')==='true';exp.setAttribute('aria-expanded',String(!o));ing.hidden=o;exp.querySelector('span').textContent=o?"What's in it":"Hide";});
+  const db=card.querySelector('[data-del]');if(db)db.addEventListener('click',()=>deleteMeal(db.dataset.del));
+  const ab=card.querySelector('[data-adjust]');if(ab)ab.addEventListener('click',()=>{switchTab('meals');openEditor(findMeal(cat,m.id),m.id);});
+  const rb=card.querySelector('[data-reset]');if(rb)rb.addEventListener('click',()=>{delete state.overrides[m.id];save();renderCards();update();});
+  return card;
+}
+function renderCards(){
+  CATS.forEach(cat=>{
+    const box=document.querySelector(`[data-cards="${cat}"]`);box.innerHTML='';
+    DATA.meals[cat].forEach(m=>box.appendChild(mealCard(cat,findMeal(cat,m.id),false)));
+    state.customMeals.filter(m=>m.slot===cat).forEach(m=>box.appendChild(mealCard(cat,m,true)));
+    if(state[cat]){const c=box.querySelector(`.card[data-id="${state[cat]}"]`);if(c){c.classList.add('selected');c.querySelector('input').checked=true;}}
+  });
 }
 function select(cat,id){
   state[cat]=id;save();
   document.querySelectorAll(`.card[data-cat="${cat}"]`).forEach(c=>{const on=c.dataset.id===id;c.classList.toggle('selected',on);c.querySelector('input').checked=on;});
   update();
 }
-function toggleBooster(id,on){
-  state.boosters=state.boosters.filter(x=>x!==id);
-  if(on)state.boosters.push(id);
-  save();update();
-}
-
-/* completeness grid */
-function buildGrid(){
-  const g=document.getElementById('grid');
-  DATA.micros.forEach(k=>{const t=document.createElement('div');t.className='tile off';t.dataset.k=k;
-    t.innerHTML=`<div class="n">${DATA.short[k]}</div><div class="p">—</div>`;g.appendChild(t);});
-}
-
-/* compute — raw sum of chosen meals + active boosters, no scaling */
+function buildGrid(){const g=document.getElementById('grid');DATA.micros.forEach(k=>{const t=document.createElement('div');t.className='tile off';t.dataset.k=k;t.innerHTML=`<div class="n">${DATA.short[k]}</div><div class="p">—</div>`;g.appendChild(t);});}
 function compute(){
-  const meals=CATS.map(c=>state[c]?DATA.meals[c].find(m=>m.id===state[c]):null).filter(Boolean);
+  const meals=CATS.map(c=>state[c]?findMeal(c,state[c]):null).filter(Boolean);
   const boosters=state.boosters.map(id=>DATA.boosters.find(b=>b.id===id)).filter(Boolean);
   const items=meals.concat(boosters);
   let kcal=0,prot=0;const mic={};DATA.micros.forEach(k=>mic[k]=0);
-  items.forEach(m=>{kcal+=m.kcal;prot+=m.protein;DATA.micros.forEach(k=>mic[k]+=m.nutrients[k]);});
-  const micros={};
-  DATA.micros.forEach(k=>{const p=100*mic[k]/DATA.rdi[k];
-    micros[k]={p,state:p<100?'lo':(p<120?'borderline':'met')};});
+  items.forEach(m=>{kcal+=(m.kcal||0);prot+=(m.protein||0);DATA.micros.forEach(k=>mic[k]+=(m.nutrients[k]||0));});
+  const micros={};DATA.micros.forEach(k=>{const p=100*mic[k]/DATA.rdi[k];micros[k]={p,state:p<100?'lo':(p<120?'borderline':'met')};});
   return{mealCount:meals.length,boosterCount:boosters.length,anyPicked:items.length>0,kcal,protein:prot,micros};
 }
-
 function update(){
   const d=compute();
   document.getElementById('kcal-val').textContent=d.anyPicked?Math.round(d.kcal).toLocaleString():'—';
@@ -287,70 +362,246 @@ function update(){
   const kIn=d.kcal>=2100&&d.kcal<=2400;
   document.getElementById('g-kcal').classList.toggle('warn',d.anyPicked&&!kIn);
   document.getElementById('g-prot').classList.toggle('warn',d.anyPicked&&d.protein<132);
-
-  // target line
   const tEl=document.getElementById('target');
-  if(!d.anyPicked){tEl.innerHTML='';}
-  else if(d.kcal<2100){tEl.innerHTML=`<b>${Math.round(2250-d.kcal).toLocaleString()} kcal</b> under 2,250 — add boosters to top up.`;}
-  else if(d.kcal<=2400){tEl.innerHTML=`Within your calorie range.`;}
-  else{tEl.innerHTML=`<b>${Math.round(d.kcal-2250).toLocaleString()} kcal</b> over 2,250.`;}
-
-  // grid + counts
+  if(!d.anyPicked)tEl.innerHTML='';
+  else if(d.kcal<2100)tEl.innerHTML=`<b>${Math.round(2250-d.kcal).toLocaleString()} kcal</b> under 2,250 — add boosters or a meal to top up.`;
+  else if(d.kcal<=2400)tEl.innerHTML=`Within your calorie range.`;
+  else tEl.innerHTML=`<b>${Math.round(d.kcal-2250).toLocaleString()} kcal</b> over 2,250.`;
   let met=0,shorts=[],borderline=[];
-  DATA.micros.forEach(k=>{
-    const tile=document.querySelector(`.tile[data-k="${k}"]`);const p=tile.querySelector('.p');
+  DATA.micros.forEach(k=>{const tile=document.querySelector(`.tile[data-k="${k}"]`);const p=tile.querySelector('.p');
     if(!d.anyPicked){tile.className='tile off';p.textContent='—';return;}
     const mi=d.micros[k];tile.className='tile '+mi.state;p.textContent=Math.floor(mi.p)+'%';
-    if(mi.state==='met')met++;else if(mi.state==='lo')shorts.push(k);else borderline.push(k);
-  });
-  const mc=document.getElementById('miccount');const total=DATA.micros.length;
-  mc.innerHTML=d.anyPicked?`<b class="${met===total?'ok':'lo'}">${met}</b> / ${total} micronutrients covered`:'Pick one of each to begin';
-
-  // per-nutrient hints (short + borderline)
+    if(mi.state==='met')met++;else if(mi.state==='lo')shorts.push(k);else borderline.push(k);});
+  document.getElementById('miccount').innerHTML=d.anyPicked?`<b class="${met===DATA.micros.length?'ok':'lo'}">${met}</b> / ${DATA.micros.length} micronutrients covered`:'Pick one of each to begin';
   const hints=document.getElementById('hints');hints.innerHTML='';
-  if(d.anyPicked){
-    const flag=shorts.concat(borderline).sort((a,b)=>d.micros[a].p-d.micros[b].p);
-    if(flag.length===0){const el=document.createElement('div');el.className='allgood';el.textContent='Every micronutrient comfortably covered. This is a complete day.';hints.appendChild(el);}
-    else flag.forEach(k=>{const el=document.createElement('div');el.className='hint';const h=DATA.hint[k]?' '+DATA.hint[k]:'';
-      const tag=d.micros[k].state==='lo'?'below RDI':'only just at RDI';
-      el.innerHTML=`<b>${DATA.full[k]} — ${Math.floor(d.micros[k].p)}% (${tag}).</b>${h}`;hints.appendChild(el);});
-  }
-
-  // booster recommendations: highlight boosters that help a gap (short or borderline)
+  if(d.anyPicked){const flag=shorts.concat(borderline).sort((a,b)=>d.micros[a].p-d.micros[b].p);
+    if(!flag.length){const el=document.createElement('div');el.className='allgood';el.textContent='Every micronutrient comfortably covered. This is a complete day.';hints.appendChild(el);}
+    else flag.forEach(k=>{const el=document.createElement('div');el.className='hint';const h=DATA.hint[k]?' '+DATA.hint[k]:'';const tag=d.micros[k].state==='lo'?'below RDI':'only just at RDI';el.innerHTML=`<b>${DATA.full[k]} — ${Math.floor(d.micros[k].p)}% (${tag}).</b>${h}`;hints.appendChild(el);});}
   const gapSet=new Set(shorts.concat(borderline));
-  DATA.boosters.forEach(b=>{
-    const card=document.querySelector(`.bcard[data-id="${b.id}"]`);
-    const helps=d.mealCount>0 && b.boostKeys.some(k=>gapSet.has(k));
-    card.classList.toggle('reco',helps);
-  });
+  DATA.boosters.forEach(b=>{const card=document.querySelector(`.bcard[data-id="${b.id}"]`);card.classList.toggle('reco',d.mealCount>0&&b.boostKeys.some(k=>gapSet.has(k)));});
   const bmsg=document.getElementById('boostmsg');
   if(d.mealCount<3){bmsg.className='boostmsg';bmsg.innerHTML='Pick your three meals, then boosters that fix any gaps are highlighted here.';}
   else if(shorts.length){bmsg.className='boostmsg hasgap';bmsg.innerHTML=`<b>Below RDI: ${shorts.map(k=>DATA.short[k]).join(', ')}.</b> Highlighted boosters help close these.`;}
   else if(borderline.length){bmsg.className='boostmsg';bmsg.innerHTML=`All at RDI — <b>${borderline.map(k=>DATA.short[k]).join(', ')}</b> only just. Highlighted boosters add margin.`;}
   else{bmsg.className='boostmsg';bmsg.innerHTML='Every micronutrient comfortably covered — boosters optional.';}
-
-  // active booster count
   document.getElementById('boostcount').textContent=d.boosterCount?`${d.boosterCount} added`:'optional';
-  // sync checkbox states (for restore)
   DATA.boosters.forEach(b=>{const cb=document.querySelector(`.bcard[data-id="${b.id}"] input`);cb.checked=state.boosters.includes(b.id);});
 }
-
-/* detail toggle with dynamic height */
-function setDetail(open){
-  state.detail=open;save();
-  const dt=document.getElementById('detailtoggle'),panel=document.getElementById('detail');
-  dt.setAttribute('aria-expanded',String(open));
-  if(open){panel.style.maxHeight=panel.scrollHeight+'px';
-    panel.addEventListener('transitionend',function te(){if(state.detail)panel.style.maxHeight='none';panel.removeEventListener('transitionend',te);});}
-  else{panel.style.maxHeight=panel.scrollHeight+'px';requestAnimationFrame(()=>{panel.style.maxHeight='0px';});}
+function setDetail(open){state.detail=open;save();const dt=document.getElementById('detailtoggle'),panel=document.getElementById('detail');dt.setAttribute('aria-expanded',String(open));
+  if(open){panel.style.maxHeight=panel.scrollHeight+'px';panel.addEventListener('transitionend',function te(){if(state.detail)panel.style.maxHeight='none';panel.removeEventListener('transitionend',te);});}
+  else{panel.style.maxHeight=panel.scrollHeight+'px';requestAnimationFrame(()=>{panel.style.maxHeight='0px';});}}
+function renderCustomList(){
+  const el=document.getElementById('customlist');
+  if(!state.customMeals.length){el.innerHTML='<div class="empty">No custom meals yet. Create one and it slots into your day.</div>';return;}
+  el.innerHTML=state.customMeals.map(m=>`<div class="custrow"><div class="custmain"><span class="slotbadge ${m.slot}">${m.slot}</span><span class="custname">${esc(m.name)}</span><span class="custmacro">${m.kcal} kcal · ${Math.round(m.protein)} g protein</span></div><div class="custact"><button data-edit="${m.id}">Edit</button><button data-del="${m.id}" class="del">Delete</button></div></div>`).join('');
+  el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEditor(state.customMeals.find(m=>m.id===b.dataset.edit))));
+  el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>deleteMeal(b.dataset.del)));
 }
-
-/* init */
-buildSections();buildGrid();
-const dt=document.getElementById('detailtoggle');
-dt.addEventListener('click',()=>setDetail(dt.getAttribute('aria-expanded')!=='true'));
-CATS.forEach(c=>{if(state[c]&&DATA.meals[c].some(m=>m.id===state[c]))select(c,state[c]);});
-update();
+let editorSlot='breakfast',editingId=null,adjustingBuiltin=null;
+function setSlot(s){editorSlot=s;document.querySelectorAll('#m-slot button').forEach(b=>b.classList.toggle('on',b.dataset.slot===s));}
+function setRowMeta(row){
+  const ing=ingByLabel(row.querySelector('.ing-name').value);
+  const usel=row.querySelector('.ing-unit'),ssel=row.querySelector('.ing-state');
+  const units=ing?ing.units.map(u=>u[0]):['g','ml'];const cu=usel.value;
+  usel.innerHTML=units.map(u=>`<option${u===cu?' selected':''}>${u}</option>`).join('');
+  if(ing&&ing.forms){const cs=ssel.value||ing.default;ssel.hidden=false;
+    ssel.innerHTML=['cooked','raw'].filter(x=>ing.forms[x]).map(x=>`<option value="${x}"${x===cs?' selected':''}>${x.charAt(0).toUpperCase()+x.slice(1)} wt</option>`).join('');}
+  else{ssel.hidden=true;ssel.innerHTML='';}}
+function updateEquiv(row){
+  const el=row.querySelector('.equiv');if(!el)return;
+  const ing=ingByLabel(row.querySelector('.ing-name').value);
+  const amt=parseFloat(row.querySelector('.ing-amt').value)||0;
+  const st=row.querySelector('.ing-state');
+  if(ing&&ing.forms&&!st.hidden&&amt>0){
+    const unit=row.querySelector('.ing-unit').value;const uu=ing.units.find(u=>u[0]===unit)||['g',1];
+    const eq=equivGrams(ing,amt*uu[1],st.value||ing.default);
+    el.textContent=eq?('\u2248 '+eq.g+' g '+eq.other+' weight'):'';
+  } else el.textContent='';
+}
+function addRow(pre){const row=document.createElement('div');row.className='ingrow';
+  row.innerHTML=`<input class="ing-name" list="inglist" placeholder="Ingredient" autocomplete="off"><div class="ingctrl"><input class="ing-amt" type="number" inputmode="decimal" placeholder="Amt"><select class="ing-unit"><option>g</option><option>ml</option></select><select class="ing-state" hidden></select><button class="ing-del" title="Remove">×</button></div><div class="equiv"></div>`;
+  const name=row.querySelector('.ing-name'),unit=row.querySelector('.ing-unit'),stt=row.querySelector('.ing-state');
+  if(pre){name.value=pre.name||'';row.querySelector('.ing-amt').value=pre.amount||'';setRowMeta(row);unit.value=pre.unit||'g';if(pre.state){stt.value=pre.state;}updateEquiv(row);}
+  const live=()=>{updateEquiv(row);if(editorMode==='auto')recompute();};
+  name.addEventListener('change',()=>{setRowMeta(row);live();});
+  name.addEventListener('input',()=>{if(ingByLabel(name.value))setRowMeta(row);live();});
+  row.querySelector('.ing-amt').addEventListener('input',live);
+  unit.addEventListener('change',live);
+  stt.addEventListener('change',live);
+  row.querySelector('.ing-del').addEventListener('click',()=>{row.remove();live();});
+  document.getElementById('ingrows').appendChild(row);
+}
+function ingredientTotals(){
+  const sum={};['kcal','prot','fat','carb','fib'].concat(DATA.micros).forEach(k=>sum[k]=0);
+  let matched=0,unmatched=0;
+  document.querySelectorAll('.ingrow').forEach(r=>{
+    const name=r.querySelector('.ing-name').value,amt=parseFloat(r.querySelector('.ing-amt').value)||0,unit=r.querySelector('.ing-unit').value;
+    if(!name.trim()||amt<=0)return;const ing=ingByLabel(name);if(!ing){unmatched++;return;}
+    const uu=ing.units.find(u=>u[0]===unit)||['g',1];const g=amt*uu[1];
+    let per=ing.per100;
+    if(ing.forms){const st=r.querySelector('.ing-state').value||ing.default;per=ing.forms[st]||ing.per100;}
+    Object.keys(sum).forEach(k=>{sum[k]+=(per[k]||0)*g/100;});matched++;});
+  return{sum,matched,unmatched};
+}
+let editorMode='auto';
+function recompute(){
+  const{sum,matched,unmatched}=ingredientTotals();
+  DATA.editKeys.forEach(k=>{document.getElementById('nut-'+k).value=(k==='kcal'?Math.round(sum[k]):round1(sum[k]));});
+  const note=document.getElementById('calcnote');
+  note.textContent=matched?('Calculated live from '+matched+' ingredient(s)'+(unmatched?' — '+unmatched+' not in the library, switch to Manual to add their values.':'. Switch to Manual to override any value.')):'Add ingredients from the list — nutrition updates automatically.';
+}
+function setEditorMode(m){
+  editorMode=m;
+  document.querySelectorAll('#nutmode button').forEach(b=>b.classList.toggle('on',b.dataset.mode===m));
+  DATA.editKeys.forEach(k=>{document.getElementById('nut-'+k).readOnly=(m==='auto');});
+  if(m==='auto')recompute();
+  else document.getElementById('calcnote').textContent='Manual entry — edit any value below (e.g. for packaged foods or ingredients not in the library).';
+}
+function buildNutGrid(){
+  const g=document.getElementById('nutgrid');
+  g.innerHTML=DATA.editKeys.map(k=>{const big=(k==='kcal'||k==='prot')?' big':'';return `<label class="nutfld${big}"><span>${DATA.editLabels[k]} <em>${DATA.editUnits[k]}</em></span><input type="number" inputmode="decimal" id="nut-${k}"></label>`;}).join('');
+}
+function openEditor(meal,builtin){
+  editingId=meal&&!builtin?meal.id:null;adjustingBuiltin=builtin||null;
+  document.getElementById('editortitle').textContent=builtin?('Adjust portions \u2014 '+meal.name):(meal?'Edit meal':'New custom meal');
+  document.getElementById('m-name').value=meal?meal.name:'';
+  document.getElementById('slotfld').hidden=!!builtin;
+  setSlot(meal?(meal.slot||'breakfast'):'breakfast');
+  document.getElementById('ingrows').innerHTML='';
+  const rows=meal?(builtin?meal.items:meal.ingredients):null;
+  if(rows&&rows.length)rows.forEach(addRow);else{addRow();addRow();}
+  DATA.editKeys.forEach(k=>{const v=meal?(k==='kcal'?meal.kcal:(k==='prot'?meal.protein:(meal.nutrients[k]??0))):'';document.getElementById('nut-'+k).value=v;});
+  setEditorMode(builtin?'auto':(meal?'manual':'auto'));
+  document.getElementById('editor').hidden=false;
+  document.getElementById('newmeal').hidden=true;document.getElementById('customlist').hidden=true;
+  document.getElementById('editor').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeEditor(){document.getElementById('editor').hidden=true;document.getElementById('newmeal').hidden=false;document.getElementById('customlist').hidden=false;}
+function saveMeal(){
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){alert('Give the meal a name first.');return;}
+  const get=k=>parseFloat(document.getElementById('nut-'+k).value)||0;
+  const nutrients={};DATA.micros.forEach(k=>nutrients[k]=get(k));
+  const ingredients=[...document.querySelectorAll('.ingrow')].map(r=>{const ss=r.querySelector('.ing-state');return{name:r.querySelector('.ing-name').value.trim(),amount:parseFloat(r.querySelector('.ing-amt').value)||0,unit:r.querySelector('.ing-unit').value,state:(ss&&!ss.hidden)?ss.value:''};}).filter(i=>i.name);
+  const{sum}=ingredientTotals();
+  if(adjustingBuiltin){
+    state.overrides[adjustingBuiltin]={name,kcal:Math.round(get('kcal')),protein:round1(get('prot')),fat:Math.round(sum.fat),carb:Math.round(sum.carb),fibre:Math.round(sum.fib),nutrients,items:ingredients};
+    const bid=adjustingBuiltin;adjustingBuiltin=null;
+    save();renderCards();renderCustomList();closeEditor();switchTab('build');update();return;
+  }
+  const meal={id:editingId||('c_'+Date.now()),name,slot:editorSlot,kcal:Math.round(get('kcal')),protein:round1(get('prot')),fat:Math.round(sum.fat),carb:Math.round(sum.carb),fibre:Math.round(sum.fib),nutrients,ingredients,custom:true};
+  if(editingId){const i=state.customMeals.findIndex(m=>m.id===editingId);state.customMeals[i]=meal;}else state.customMeals.push(meal);
+  save();renderCards();renderCustomList();closeEditor();update();
+}
+function deleteMeal(id){
+  const m=state.customMeals.find(x=>x.id===id);if(!m)return;
+  if(!confirm('Delete "'+m.name+'"?'))return;
+  state.customMeals=state.customMeals.filter(x=>x.id!==id);
+  CATS.forEach(c=>{if(state[c]===id)state[c]=null;});
+  save();renderCards();renderCustomList();update();
+}
+function switchTab(t){
+  document.getElementById('tab-build').hidden=t!=='build';
+  document.getElementById('tab-meals').hidden=t!=='meals';
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  if(t==='meals'){closeEditor();renderCustomList();}
+}
+/* ---------- barcode scanning ---------- */
+const OFFMAP=[["kcal","energy-kcal_100g",1],["prot","proteins_100g",1],["fat","fat_100g",1],["carb","carbohydrates_100g",1],["fib","fiber_100g",1],
+["vitA","vitamin-a_100g",1e6],["vitC","vitamin-c_100g",1e3],["vitD","vitamin-d_100g",1e6],["vitE","vitamin-e_100g",1e3],["vitK","vitamin-k_100g",1e6],
+["B1","vitamin-b1_100g",1e3],["B2","vitamin-b2_100g",1e3],["B3","vitamin-pp_100g",1e3],["B5","pantothenic-acid_100g",1e3],["B6","vitamin-b6_100g",1e3],
+["biotin","biotin_100g",1e6],["folate","vitamin-b9_100g",1e6],["B12","vitamin-b12_100g",1e6],["choline","choline_100g",1e3],
+["Ca","calcium_100g",1e3],["Fe","iron_100g",1e3],["Mg","magnesium_100g",1e3],["P","phosphorus_100g",1e3],["K","potassium_100g",1e3],
+["Zn","zinc_100g",1e3],["Cu","copper_100g",1e3],["Mn","manganese_100g",1e3],["Se","selenium_100g",1e6],["iodine","iodine_100g",1e6],
+["Cr","chromium_100g",1e6],["Mo","molybdenum_100g",1e6]];
+let scanner=null,scanFood=null;
+function scanStatus(t){document.getElementById('scanstatus').textContent=t;}
+function loadScannerLib(){
+  return new Promise((res,rej)=>{
+    if(window.Html5Qrcode)return res();
+    const srcs=["https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js","https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"];
+    const tryOne=i=>{if(i>=srcs.length)return rej(new Error('lib'));
+      const sc=document.createElement('script');sc.src=srcs[i];sc.onload=()=>res();sc.onerror=()=>tryOne(i+1);document.head.appendChild(sc);};
+    tryOne(0);
+  });
+}
+async function openScan(){
+  document.getElementById('scanmodal').hidden=false;
+  document.getElementById('scanresult').hidden=true;scanFood=null;
+  scanStatus('Loading scanner…');
+  try{
+    await loadScannerLib();
+    const fmts=[Html5QrcodeSupportedFormats.EAN_13,Html5QrcodeSupportedFormats.EAN_8,Html5QrcodeSupportedFormats.UPC_A,Html5QrcodeSupportedFormats.UPC_E];
+    scanner=new Html5Qrcode('scanvideo',{formatsToSupport:fmts,verbose:false});
+    await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:250,height:140}},
+      code=>{stopScan();document.getElementById('scancode').value=code;lookupBarcode(code);},()=>{});
+    scanStatus('Point the camera at the barcode…');
+  }catch(e){
+    scanner=null;
+    scanStatus('Camera unavailable — type the barcode number below instead.');
+  }
+}
+function stopScan(){if(scanner){const sc=scanner;scanner=null;sc.stop().then(()=>sc.clear()).catch(()=>{});}}
+function closeScan(){stopScan();document.getElementById('scanmodal').hidden=true;}
+async function lookupBarcode(code){
+  code=String(code||'').replace(/\D/g,'');
+  if(!code){scanStatus('Enter a barcode number first.');return;}
+  scanStatus('Looking up '+code+'…');document.getElementById('scanresult').hidden=true;
+  try{
+    const r=await fetch('https://world.openfoodfacts.org/api/v0/product/'+code+'.json');
+    const d=await r.json();
+    if(d.status!==1||!d.product){scanStatus('Not found in Open Food Facts — enter it as a manual ingredient instead.');return;}
+    const p=d.product,n=p.nutriments||{};
+    const per100={};let microsFound=0;
+    OFFMAP.forEach(([k,ok,mult])=>{let v=n[ok];
+      if(k==='kcal'&&(v===undefined||v===null)&&n['energy_100g']!=null)v=n['energy_100g']/4.184;
+      v=(v===undefined||v===null||isNaN(v))?0:v*mult;
+      per100[k]=Math.round(v*100)/100;
+      if(!['kcal','prot','fat','carb','fib'].includes(k)&&v>0)microsFound++;});
+    per100.o3=Math.round(1e3*(((+n['eicosapentaenoic-acid_100g'])||0)+((+n['docosahexaenoic-acid_100g'])||0))*100)/100;
+    if(per100.o3>0)microsFound++;
+    let label=(p.product_name||'Product '+code).trim();
+    const brand=(p.brands||'').split(',')[0].trim();
+    if(brand&&!label.toLowerCase().includes(brand.toLowerCase()))label=brand+' '+label;
+    label=label.slice(0,60);
+    const clash=ingByLabel(label);
+    if(clash&&clash.barcode!==code)label=label+' ('+code.slice(-4)+')';
+    scanFood={key:'u_'+code,barcode:code,label,units:[['g',1],['ml',1]],per100};
+    document.getElementById('scanname').textContent=label;
+    document.getElementById('scanmeta').textContent=per100.kcal+' kcal · '+per100.prot+' g protein · '+per100.fat+' g fat · '+per100.carb+' g carb per 100 g — '+microsFound+' of 27 micronutrients on the label';
+    document.getElementById('scanresult').hidden=false;
+    scanStatus('Found. Set the amount and add it.');
+  }catch(e){scanStatus('Lookup failed — check your connection and try again.');}
+}
+function addScannedFood(){
+  if(!scanFood)return;
+  const grams=parseFloat(document.getElementById('scangrams').value)||100;
+  const i=state.customFoods.findIndex(f=>f.barcode===scanFood.barcode);
+  if(i>=0)state.customFoods[i]=scanFood;else state.customFoods.push(scanFood);
+  save();refreshInglist();
+  addRow({name:scanFood.label,amount:grams,unit:'g',state:''});
+  if(editorMode==='auto')recompute();
+  closeScan();
+}
+refreshInglist();
+buildStatic();buildGrid();buildNutGrid();renderCards();
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+const dt=document.getElementById('detailtoggle');dt.addEventListener('click',()=>setDetail(dt.getAttribute('aria-expanded')!=='true'));
+document.getElementById('clearday').addEventListener('click',()=>{CATS.forEach(c=>state[c]=null);state.boosters=[];save();renderCards();update();});
+document.getElementById('scanbtn').addEventListener('click',openScan);
+document.getElementById('scanclose').addEventListener('click',closeScan);
+document.getElementById('scanlookup').addEventListener('click',()=>lookupBarcode(document.getElementById('scancode').value));
+document.getElementById('scancode').addEventListener('keydown',e=>{if(e.key==='Enter')lookupBarcode(e.target.value);});
+document.getElementById('scanadd').addEventListener('click',addScannedFood);
+document.getElementById('scanmodal').addEventListener('click',e=>{if(e.target.id==='scanmodal')closeScan();});
+document.getElementById('newmeal').addEventListener('click',()=>openEditor(null));
+document.getElementById('adding').addEventListener('click',()=>{addRow();if(editorMode==='auto')recompute();});
+document.querySelectorAll('#nutmode button').forEach(b=>b.addEventListener('click',()=>setEditorMode(b.dataset.mode)));
+document.getElementById('savemeal').addEventListener('click',saveMeal);
+document.getElementById('cancelmeal').addEventListener('click',()=>{const wasB=!!adjustingBuiltin;adjustingBuiltin=null;closeEditor();if(wasB)switchTab('build');});
+document.querySelectorAll('#m-slot button').forEach(b=>b.addEventListener('click',()=>setSlot(b.dataset.slot)));
+CATS.forEach(c=>{if(state[c]&&findMeal(c,state[c]))select(c,state[c]);});
+update();renderCustomList();
 requestAnimationFrame(()=>{const p=document.getElementById('detail');p.style.maxHeight=state.detail?'none':'0px';dt.setAttribute('aria-expanded',String(state.detail));});
 </script>
 </body>
